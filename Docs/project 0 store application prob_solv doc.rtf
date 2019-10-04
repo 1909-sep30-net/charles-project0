@@ -132,11 +132,50 @@ Flow Chart:\par
 \b0\par
 rough draft\par
 \par
-Customer Enters Kiosk -> Existing Customer?  \tab\par
-\tab\tab\tab\tab\tab Yes?     ---------------------------------V\par
-\tab\tab\tab\tab\tab No?\tab -> Enter Information -> Place Order \par
-\tab\tab\tab\tab\tab\tab\tab\tab\tab     V\par
-\tab\tab\tab\tab\tab\tab                Process order &  Adjust Loc Inv\par
+Customer Enters Kiosk\par
+\tab |\tab\tab\tab\tab\par
+\tab V\tab\tab\tab\tab\tab\tab\tab\tab     \par
+Existing Customer? Yes     -----------------\par
+\tab No\tab\tab\tab\tab |\par
+\tab |\tab\tab\tab\tab |\par
+\tab V\tab\tab\tab\tab |\par
+ Enter Customer Information \tab\tab |\par
+\tab |\tab\tab\tab\tab |\par
+\tab V\tab\tab\tab\tab |\par
+    Login Customer              <--------------\par
+\tab |\par
+\tab V\par
+       Main Menu------------------------> Get Customer Info \line\tab |\tab\tab         \tab\tab |------> Order History\par
+\tab V\tab\tab\tab\tab |------> Adjust Customer Info\par
+ Place Order -----------\tab\tab\tab |------> Prompt Customer for Re-Order\par
+\tab |\tab\tab |\par
+\tab V\tab\tab V\par
+Process order \tab     Adjust This Location's Inventory\par
+\par
+\par
+\par
+\par
+Manager Enters Kiosk\par
+\tab |\tab\tab\tab\tab\par
+\tab V\tab\tab\tab\tab\tab\tab\tab\tab     \par
+Existing Location? Yes     -----------------\par
+\tab No\tab\tab\tab\tab |\par
+\tab |\tab\tab\tab\tab |\par
+\tab V\tab\tab\tab\tab |\par
+ Enter Location & Mgr Information\tab |\par
+\tab |\tab\tab\tab\tab |\par
+\tab V\tab\tab\tab\tab |\par
+    Login Manger              <----------------\par
+\tab |\par
+\tab V\par
+       Main Menu------------------------> Get Customer List  --------------------> get specific customer\line\tab\tab\tab\tab |\tab\tab\tab     \tab        \tab\tab |--> get history\par
+\tab\tab\tab\tab | -- Get Location Info\tab\tab\tab\tab\par
+\tab\tab\tab\tab                |--> Adjust Location Info\par
+\tab\tab\tab\tab\tab    |--> Get Location Inventory----->Get Order History\par
+\tab\tab\tab\tab\tab                  |-->adjust inventory\par
+\tab\tab\tab\tab\tab\tab      |-->adjust menu of goods\par
+\tab\tab\tab\tab\tab\tab      |-->display best sellers aka most proffitable.\par
+\par
 \par
 \par
 \par

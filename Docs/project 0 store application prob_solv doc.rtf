@@ -1,0 +1,178 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033\deflangfe1033{\fonttbl{\f0\fswiss\fprq2\fcharset0 Arial;}{\f1\fswiss\fprq2 Arial;}{\f2\fswiss\fprq2\fcharset0 Calibri;}}
+{\colortbl ;\red0\green0\blue0;}
+{\*\generator Riched20 10.0.18362}{\*\mmathPr\mnaryLim0\mdispDef1\mwrapIndent1440 }\viewkind4\uc1 
+\pard\widctlpar\f0\fs20 The attached code was entirely my own work. \par
+\par
+\par
+Name: Charles Allensworth\par
+Organization: Revature\par
+Date: 10-04-2019\par
+\par
+
+\pard\widctlpar\qc\b project 0: store application\b0\par
+
+\pard\widctlpar\par
+\b I. Understand the Problem \b0 (Objectives, Specified Tasks, Implied Tasks)\par
+\b\par
+
+\pard\widctlpar\li720 Problem Specification:\b0\par
+\par
+Create a store kiosk for customers an/or staff to log into in order store and process orders.\par
+\par
+\ul Functional Requirements\line\ulnone\par
+\f1\bullet\tab place orders to store locations for customers\par
+\bullet\tab add a new customer\par
+\bullet\tab search customers by name\par
+\bullet\tab display details of an order\par
+\bullet\tab display all order history of a store location\par
+\bullet\tab display all order history of a customer\par
+\bullet\tab input validation\par
+\bullet\tab\f0 must include \f1 exception handling\f0  (try catch)\f1\par
+\bullet\tab persistent data (SQL); no products, prices, customers, etc. hardcoded in C#\par
+\bullet\tab logging\par
+\bullet\tab (optional: order history can be sorted by earliest, latest, cheapest, most expensive)\par
+\bullet\tab (optional: get a suggested order for a customer based on his order history)\par
+\bullet\tab (optional: save some or all data to disk in JSON format)\par
+\bullet\tab (optional: load some or all data from disk)\par
+\bullet\tab (optional: display some statistics based on order history)\par
+\par
+\ul\f0 Structural Requirements\ulnone\par
+\f2\fs18  \f0\par
+\b\fs20 business logic\line\b0\par
+\f1\bullet\tab class library\par
+\bullet\tab contains all business logic\par
+\bullet\tab contains domain classes (customer, order, store, product, etc.)\par
+\bullet\tab documentation with <summary> XML comments (optional: <params> and \line\f0\tab\f1 <return>)\par
+\bullet\tab has no dependency on UI or any input/output considerations\line\line\b data access\par
+\b0\line\bullet\tab class library\par
+\bullet\tab contains scaffolded EF DbContext\par
+\bullet\tab contains data access logic but no business logic\par
+\bullet\tab use repository pattern for separation of concerns\par
+\line\b test\par
+\b0\line\bullet\tab at least 10 test methods\par
+\bullet\tab use TDD for some of the application\par
+\bullet\tab focus on unit testing business logic; testing the console app is very low priority\par
+\f0\par
+\b\f1 user interface\par
+\b0\line\bullet\tab interactive console application\par
+\bullet\tab has only display- and input-related code\par
+\bullet\tab low-priority component, will be replaced when we move to project 1\par
+\f0\par
+\b object model\line\b0\par
+\ul customer\par
+\ulnone\par
+\f1\bullet\tab has first name, last name, etc.\par
+\bullet\tab (optional: has a default store location to order from)\par
+\line\ul order\ulnone\par
+\line\bullet\tab has a store location\par
+\bullet\tab has a customer\par
+\bullet\tab has an order time (when the order was placed)\par
+\bullet\tab can contain multiple product types in the same order\par
+\bullet\tab rejects orders with unreasonably high product quantities\par
+\bullet\tab must have some additional business rules\par
+\line\ul location\par
+\ulnone\line\bullet\tab has an inventory\par
+\bullet\tab inventory decreases when orders are accepted\par
+\bullet\tab rejects orders that cannot be fulfilled with remaining inventory\par
+\bullet\tab (optional: more than one inventory item decrements for a given product order, for \f0\tab\f1 at least one product)\f0  \par
+\line\ul\f1 product\f0\par
+\ulnone\par
+\f1\bullet\tab\f0 Product can literally be anything.  A generic "product" class will be the first step.\par
+\tab Chosing a specific product is secondary, and can be implemented later, but must \line\tab be chosen soon.\par
+\par
+\tab Instructor mentioned pizzas or food or other services, which are going to have \line\tab their own related details.\par
+\par
+\b Deliverable\b0 : \par
+\par
+Store kiosk program in C# program and SQL database to store related data for reular query/storage.\par
+\par
+\par
+\b Objectives/ Requirements\b0 : \par
+\par
+
+\pard\widctlpar\li1440 Core back-end functionality for a point-of-sale kiosk.\par
+
+\pard\widctlpar\li720\~\~\~ \par
+\b Outputs\b0 : \par
+
+\pard\widctlpar\li1440\par
+Data to the database.\par
+Order Confirmation\par
+Changes to Location Inventory.\par
+
+\pard\widctlpar\li720\b  \par
+Inputs \b0 : \par
+\par
+
+\pard\widctlpar\li1440 New Customer Information\par
+Customer Orders\par
+Location Information\par
+\par
+
+\pard\widctlpar\li720\par
+\b Assumptions\b0 : \par
+\par
+
+\pard\widctlpar\li1440 The kiosk should be as generic as possible, and the GUI is non-critical.   \par
+
+\pard\widctlpar\li720\par
+\b Constraints\b0 : \par
+\par
+\tab  Must use C#, core code project must be completed within 7 days.  Testing will \tab follow.\par
+\line\b Equations/Data/Previous Results\b0 : \par
+\par
+\tab No equations given, except that inventory will reduce, cash-on hand\par
+\par
+
+\pard\widctlpar\b II. Design a Solution:\b0  \~(\b Flow Diagram\b0 , Class or UML, and/or \b Pseudocode\b0 )\par
+\par
+\b\par
+\par
+Flow Chart:\par
+\b0\par
+rough draft\par
+\par
+Customer Enters Kiosk -> Existing Customer?  \tab\par
+\tab\tab\tab\tab\tab Yes?     ---------------------------------V\par
+\tab\tab\tab\tab\tab No?\tab -> Enter Information -> Place Order \par
+\tab\tab\tab\tab\tab\tab\tab\tab\tab     V\par
+\tab\tab\tab\tab\tab\tab                Process order &  Adjust Loc Inv\par
+\par
+\par
+\par
+\b UML Diagram\b0 :\par
+\line\par
+\b Test Plan\b0\par
+\par
+\trowd\trgaph15\trleft-150\trrh691\trpaddl15\trpaddr15\trpaddfl3\trpaddfr3
+\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx9630 
+\pard\intbl\widctlpar Case\cell Purpose\cell Test Data\cell Expected Result\cell Actual Result\cell Pass/Fail\cell Comments\cell\row\trowd\trgaph15\trleft-150\trrh610\trpaddl15\trpaddr15\trpaddfl3\trpaddfr3
+\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx9630 
+\pard\intbl\widctlpar\cell\cell\cell\cell\cell\cell\cell\row\trowd\trgaph15\trleft-150\trrh610\trpaddl15\trpaddr15\trpaddfl3\trpaddfr3
+\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx9630 
+\pard\intbl\widctlpar\cell\cell\cell\cell\cell\cell\cell\row\trowd\trgaph15\trleft-150\trrh610\trpaddl15\trpaddr15\trpaddfl3\trpaddfr3
+\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx9630 
+\pard\intbl\widctlpar\cell\cell\cell\cell\cell\cell\cell\row 
+\pard\widctlpar\line\par
+\b\page\par
+III. Implement Solution\b0  (Screenshots and/or Source Code)\par
+\par
+\ul Screen Shot?\par
+\par
+Sample Source Code?\par
+\ulnone\par
+\b IV. Execute Test Plan\b0  (Filled Out Test Plan, as Planned in Part II)\par
+\par
+\trowd\trgaph15\trleft-150\trrh691\trpaddl15\trpaddr15\trpaddfl3\trpaddfr3
+\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx9630 
+\pard\intbl\widctlpar Case\cell Purpose\cell Test Data\cell Expected Result\cell Actual Result\cell Pass/Fail\cell Comments\cell\row\trowd\trgaph15\trleft-150\trrh610\trpaddl15\trpaddr15\trpaddfl3\trpaddfr3
+\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx9630 
+\pard\intbl\widctlpar\cell\cell\cell\cell\cell\cell\cell\row\trowd\trgaph15\trleft-150\trrh610\trpaddl15\trpaddr15\trpaddfl3\trpaddfr3
+\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx9630 
+\pard\intbl\widctlpar\cell\cell\cell\cell\cell\cell\cell\row\trowd\trgaph15\trleft-150\trrh610\trpaddl15\trpaddr15\trpaddfl3\trpaddfr3
+\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx9630 
+\pard\intbl\widctlpar\cell\cell\cell\cell\cell\cell\cell\row 
+\pard\widctlpar\par
+\par
+}
+ 

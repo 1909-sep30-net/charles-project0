@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>130</x>
+      <y>110</y>
+      <w>360</w>
+      <h>310</h>
+    </coordinates>
+    <panel_attributes>business_logic::Customer
+--
+-custID: Long
+-custFName: string
+-custMI: char
+-custLName: string
+-custEmail: string
+-custPhone: int
+-custLastOrder: Order
+-custOrdHist : List
+--
+#Operation(i: int): int
+/+AbstractOperation()/
+--
+Responsibilities
+-- Resp1
+*-- Resp2*</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>580</x>
+      <y>80</y>
+      <w>330</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>project::ClassName
+--
+-privateVar: dataType
++publicVar: dataType
+#protectedVar: dataType
+--
++methodName(param: type): returnType
+/+AbstractOperation()/
+--
+Responsibilities
+-- Resp1
+*-- Resp2*</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

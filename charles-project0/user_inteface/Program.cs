@@ -17,6 +17,10 @@ namespace user_inteface
 
                 Console.Write($"Welcome to {manager}'s {product} {service}\n");
                 Console.WriteLine("Please make a choice");
+                Console.WriteLine("1. Returning Customer\n"
+                                + "2. New Customer\n\n\n"
+                                + "3. ---->mgmt<----");
+
 
                 string choice = Console.ReadLine();
 

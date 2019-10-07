@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace data_access
+namespace business_logic
 {
-    class DatabaseHandler
+    interface IProduct
     {
-     
+        public double Profitability();
     }
 }

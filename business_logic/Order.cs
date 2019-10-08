@@ -17,7 +17,7 @@ namespace business_logic
         private double totalCost;
 
         //whats being ordered and how much
-        private List< Tuple< long, int> > currentOrder;
+        private List< Product > currentOrder;
 
         //when was it ordered
         private int orderDate { get; set; }

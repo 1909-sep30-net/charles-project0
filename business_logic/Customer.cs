@@ -13,12 +13,20 @@ namespace business_logic
 
         private string lName { get; set; }
 
-        //noboody has a non-number phone number
-        private int phoneNum { get; set; }
+        // phone number
+        private string phoneNum { get; set; }
 
         //simple constructor
-        public Customer(string first, string last, int phone)
+        public Customer(string first, string last, string phone)
         {
+            //dynamically generate this.
+            this.custID = 1;
+
+            //get basic info
+            this.fName = first;
+            this.lName = last;
+            this.phoneNum = phone;
+
 
         }
 
@@ -40,17 +48,33 @@ namespace business_logic
             return this.fName;
         }
 
+        public void SetfName(string change)
+        {
+            this.fName = change;
+        }
+
+
+
         public string GetlName()
         {
             return this.lName;
         }
 
+        public void SetlName(string change)
+        {
+            this.lName = change;
+        }
 
-        public int GetPhone()
+
+        public string GetPhone()
         {
             return this.phoneNum;
         }
 
+        public void SetPhone(string change)
+        {
+            this.phoneNum = change;
+        }
 
 
     }

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace business_logic
 {
-    class Location: ILocation
+    public class Location : ILocation
     {
         //unique id
         private int locID { get; set; }
@@ -15,40 +15,51 @@ namespace business_logic
         private int region { get; set; }
 
         //product id, quantity
-        private List< Tuple<long, int> > inventory;
+        private List<IProduct> inventory;
 
         //list of reciepts
-        private List< long > receiptNums;
+        private List<IOrder> receiptNums;
 
         //who runs the place?
         private long mgrID;
+        private string mgrpwd;
 
         //is it on fire?
         public bool isOnFire = false;
 
-        private void addProduct(long prodID, int qty)
+        //constructor
+        public Location(string name, int region, long mgrID, string mgrpwd)
         {
-            this.inventory.Add( new Tuple<long, int>(prodID, qty) );
+            this.locID = 1;
+            this.region = region;
+
+            //set up the inventory
+            this.inventory = new List< IProduct >();
+            
+            //add the first product (which is nothing) for first product.
+            // and empty store has nothing. 
+            
         }
 
-        void ILocation.addProduct(long prodN, int qty)
+        //add a product to inventory
+        public void AddProduct( IProduct addMe )
         {
-            throw new NotImplementedException();
+            this.inventory.Add( addMe );
         }
 
-        public void remProduct(long prodN, int qty)
+        //remove an item from inventory
+        public void RemProduct( IProduct remMe)
         {
-            throw new NotImplementedException();
+            this.inventory.Remove( remMe );
         }
 
-        public void recieveInv(long prodN, int qty)
+        //adjust the quantity of an item in inventory.
+        public void AdjustInv(string prod, int qty)
         {
-            throw new NotImplementedException();
-        }
+            IProduct element = inventory.Find(e => e.GetTheName() == prod );
 
-        public void adjustInv(long prodN, int qty)
-        {
-            throw new NotImplementedException();
+            element.AdjustQty(qty);
+
         }
     }
 }

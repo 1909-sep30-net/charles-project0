@@ -8,6 +8,8 @@ namespace user_inteface
     {
         static void Main(string[] args)
         {
+            //set up location
+            ILocation store = new Location("Downtown", 1, 12345, "pickleJar42");
             string manager = "Soupy";
             string product = "Robot";
             string service = "Sales";
@@ -36,6 +38,7 @@ namespace user_inteface
                     case '2':
                         Console.Write("Please Tell Us\nWho You Are :\n");
                         NapTime(1000);
+                        GetCustomer();
 
                         break;
                     case '3':
@@ -74,9 +77,9 @@ namespace user_inteface
             string ln = Console.ReadLine();
             
             Console.Write("Cell Phone Number: ");
-            string cns = Console.ReadLine();
-            
-            int cn = Int32.Parse(cns);
+
+            string cn = Console.ReadLine();
+
             Customer sample = new Customer(fn,ln,cn);
 
             //confirm that data is correct.
@@ -84,17 +87,63 @@ namespace user_inteface
                             + "Is your information correct?\n 1: Yes, 2: No\n\n");
             
             string read = Console.ReadLine();
-
             bool sentinalConf = false;
-            while(!sentinalConf)
-            { 
-                
-                if ( read == "1")
-                {
-                    sentinalConf = true;
-                }
+
+            if (read == "1")
+            {
+                sentinalConf = true;
+                NapTime(1000);
+                Console.WriteLine("Thank You.");
             }
-            Console.WriteLine("Thank You, {}")
+
+            while(!sentinalConf)
+            {
+                Console.Clear();
+                Console.WriteLine("Please correct your information");
+                NapTime(1000);
+                    string choice = "NOPE";
+                    
+                    Console.WriteLine($"Enter a Number for Correction or 0 to finish: "
+                        + $"\n1: { sample.GetfName() } "
+                        + $"\n2. { sample.GetlName() } "
+                        + $"\n3. { sample.GetPhone() } " );
+
+                choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        Console.Clear();
+                        Console.WriteLine("Re-Enter your first-name: ");
+                        sample.SetfName(Console.ReadLine());
+
+                        break;
+                    case "2":
+                        Console.Clear();
+                        Console.WriteLine("Re-Enter your last-name: ");
+                        sample.SetlName(Console.ReadLine());
+
+
+                        break;
+                    case "3":
+                        Console.Clear();
+                        Console.WriteLine("Re-Enter your phone-number: ");
+                        sample.SetPhone(Console.ReadLine());
+
+
+                        break;
+                    case "0":
+                        sentinalConf = true;
+                        break;
+                    default:
+                        sentinalConf = true;
+                        break;
+                }
+
+            }//end while loop
+
+            Console.WriteLine($"Thank You, {sample.GetfName()}");
+            NapTime(1000);
             //stub here
             //correct entry and store customer.
 

@@ -70,7 +70,6 @@ Responsibilities
 --
 + updateTotal: void
 + getTodaysDate: void
-+ orderBuild: string
 + addItemToOrder(): void
 + removeItemFromOrder: void
 

@@ -4,8 +4,9 @@ using System.Text;
 
 namespace business_logic
 {
-    interface ICustomer
+    public interface ICustomer
     {
+        
         string MakeString();
 
         void SetFavorite();

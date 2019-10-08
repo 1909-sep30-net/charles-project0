@@ -4,7 +4,7 @@ using System.Text;
 
 namespace business_logic
 {
-    class Customer: ICustomer
+    public class Customer: ICustomer
     {
         //unique id
         private long custID { get; set; }
@@ -15,6 +15,12 @@ namespace business_logic
 
         //noboody has a non-number phone number
         private int phoneNum { get; set; }
+
+        //simple constructor
+        public Customer(string first, string last, int phone)
+        {
+
+        }
 
         public string MakeString()
         {
@@ -28,5 +34,24 @@ namespace business_logic
             //Fix this.
             throw new NotImplementedException();
         }
+
+        public string GetfName()
+        {
+            return this.fName;
+        }
+
+        public string GetlName()
+        {
+            return this.lName;
+        }
+
+
+        public int GetPhone()
+        {
+            return this.phoneNum;
+        }
+
+
+
     }
 }

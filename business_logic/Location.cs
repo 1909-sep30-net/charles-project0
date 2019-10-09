@@ -63,7 +63,13 @@ namespace business_logic
 
             //holds the first spot
             IOrder blankOrder = new Order();
+            //add an order
+
+            //add a new blank order
             this.receipts.Add( blankOrder );
+            
+            //add the dummy item to the dummy order 
+            this.receipts[0].AddItemToOrder(new Product("nothing", "nada", 0.0) , 0) ;
         }
 
         //REMOVE or change...unsecure
@@ -118,6 +124,13 @@ namespace business_logic
             return this.mgr;
         }
 
+        ////////////////////////////////////////////////////////////
+        ///   Manage the Location
+        ///   TODO:
+        ///       Add a Set Location
+        ///       Add or Remove Inventory
+        ///       Adjust Inventory Directly
+
         public void MangeLocation()
         {
             //sentinel
@@ -144,6 +157,10 @@ namespace business_logic
                         Console.ReadLine();
                         break;
                     case "2":
+                        Console.Clear();
+                        PrintReciepts();
+                        Console.WriteLine("Press Any Key To Exit:");
+                        Console.ReadLine();
                         break;
                     case "3":
                         break;
@@ -158,20 +175,24 @@ namespace business_logic
                 }
             }
         }
+
+
         public string ManageLocMenu()
         {
             return ("\nWelcome Manager"
             + "\nPlease Choose One Of The Following"
-            + "\n\n1. Store Inventory"
-            + "\n2. Order History"
-            + "\n3. Client List"
+            + "\n\n1. Store Inventory" //need submenu
+            + "\n2. Order History"     //need submenu
+            + "\n3. Client List"       //
             + "\n4. Sales Reporting"   
             + "\n5. Exit Management Menu"
              );
 
 
         }
-
+        /// 
+        /// ///////////////////////////////////////////////////////
+        //
         private void PrintInv()
         {
             Console.WriteLine("Inventory On Hand");
@@ -186,10 +207,10 @@ namespace business_logic
         {
             Console.WriteLine("Recent Orders");
             //visible format
-            for (int i = 0; i < this.inventory.Count; i++)
+            for (int i = 0; i < this.receipts.Count; i++)
             {
                 
-                Console.WriteLine($"Order {i}: Customer: { this.receipts[i].GetCustomer().GetPhone() }Qty Items Ordered: {this.receipts[i].ReturnTotalItems() } Sale: { this.receipts[i].GetTotal() } ");
+                Console.WriteLine($"Order {i}: Customer: { this.receipts[i].GetCustomer().GetPhone() } Qty Items: {this.receipts[i].ReturnTotalItems() } Sale: { this.receipts[i].GetTotal() } ");
             }
         }
     }

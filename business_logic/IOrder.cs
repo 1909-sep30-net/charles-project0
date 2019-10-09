@@ -6,10 +6,10 @@ namespace business_logic
 {
     public interface IOrder
     {
-        public void UpdateTotal(IProduct item);
+        public void UpdateTotal(Tuple<IProduct, int> goods);
         public double GetTotal();
         public void GetTodaysDate();
-        public void AddItemToOrder();
+        public void AddItemToOrder(IProduct item , int qty);
         public void RemoveItemFromOrder();
         public int ReturnTotalItems();
 

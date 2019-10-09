@@ -6,10 +6,13 @@ namespace business_logic
 {
     public interface IOrder
     {
-        public void updateTotal();
-        public void getTodaysDate();
-        public void addItemToOrder();
-        public void removeItemFromOrder();
+        public void UpdateTotal(IProduct item);
+        public double GetTotal();
+        public void GetTodaysDate();
+        public void AddItemToOrder();
+        public void RemoveItemFromOrder();
+        public int ReturnTotalItems();
 
+        public ICustomer GetCustomer();
     }
 }

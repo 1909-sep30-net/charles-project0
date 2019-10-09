@@ -17,7 +17,7 @@ namespace business_logic
         private double totalCost;
 
         //whats being ordered and how much
-        private List< Product > currentOrder;
+        private List< Product > itemsOrdered;
 
         //when was it ordered
         private int orderDate { get; set; }
@@ -35,24 +35,39 @@ namespace business_logic
             this.orderIsLocked = true;
         }
 
-        public void updateTotal()
+        public void UpdateTotal(IProduct item)
         {
-            ;
+            this.totalCost += item.GetSalePrice();
         }
 
-        public void getTodaysDate()
+        public double GetTotal()
+        {
+            return this.totalCost;
+        }
+
+        public void GetTodaysDate()
         {
             
         }
 
-        public void addItemToOrder()
+        public void AddItemToOrder()
         {
             ;
         }
 
-        public void removeItemFromOrder()
+        public void RemoveItemFromOrder()
         {
             ;
+        }
+
+        public int ReturnTotalItems()
+        {
+            return this.itemsOrdered.Count;
+        }
+
+        public ICustomer GetCustomer()
+        {
+            return this.cust;
         }
     }
 }

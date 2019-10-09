@@ -11,6 +11,10 @@ namespace business_logic
         public void AdjustQty(int adjustment);
 
         public string GetTheName();
+
+        public int GetStockTotal();
+
+        public double GetSalePrice();
     }
     
     

@@ -23,6 +23,8 @@ namespace business_logic
         private List<IOrder> receipts;
 
         //who runs the place?
+
+        private ICustomer mgr;
         private long mgrID;
         private string mgrpwd;
 
@@ -56,7 +58,7 @@ namespace business_logic
             this.inventory.Add(blank);
 
             //manager is the first client
-            ICustomer mgr = new Customer(mgrID.ToString(), mgrID.ToString(), "n/a");
+            this.mgr = new Customer(mgrID.ToString(), mgrID.ToString(), "n/a");
             this.custList.Add(mgr);//not a dummy to hold the first spot.
 
             //holds the first spot
@@ -111,7 +113,84 @@ namespace business_logic
             return false;
         }
 
+        public ICustomer GetMgr()
+        {
+            return this.mgr;
+        }
+
+        public void MangeLocation()
+        {
+            //sentinel
+            bool done = false;
+            string choice = "none";
+
+            while(!done)
+            {
+                Console.Clear();
+                
+                //prompt
+                Console.WriteLine(ManageLocMenu() );
+                
+                //get the choice
+                choice = Console.ReadLine();
+
+                //logic for choice
+                switch(choice)
+                {
+                    case "1":
+                        Console.Clear();
+                        PrintInv();
+                        Console.WriteLine("Press Any Key To Exit:");
+                        Console.ReadLine();
+                        break;
+                    case "2":
+                        break;
+                    case "3":
+                        break;
+                    case "4":
+                        break;
+                    case "5":
+                        done = true;
+                        break;
+                    default:
+                        Console.WriteLine("Exiting");
+                        break;
+                }
+            }
+        }
+        public string ManageLocMenu()
+        {
+            return ("\nWelcome Manager"
+            + "\nPlease Choose One Of The Following"
+            + "\n\n1. Store Inventory"
+            + "\n2. Order History"
+            + "\n3. Client List"
+            + "\n4. Sales Reporting"   
+            + "\n5. Exit Management Menu"
+             );
 
 
+        }
+
+        private void PrintInv()
+        {
+            Console.WriteLine("Inventory On Hand");
+            //visible format
+            for (int i = 0; i < this.inventory.Count; i++)
+            {
+                Console.WriteLine($"Item: {this.inventory[i].GetTheName() } Quantity: { this.inventory[i].GetStockTotal() } ");
+            }
+        }
+
+        private void PrintReciepts()
+        {
+            Console.WriteLine("Recent Orders");
+            //visible format
+            for (int i = 0; i < this.inventory.Count; i++)
+            {
+                
+                Console.WriteLine($"Order {i}: Customer: { this.receipts[i].GetCustomer().GetPhone() }Qty Items Ordered: {this.receipts[i].ReturnTotalItems() } Sale: { this.receipts[i].GetTotal() } ");
+            }
+        }
     }
 }

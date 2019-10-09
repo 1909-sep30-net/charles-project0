@@ -10,5 +10,10 @@ namespace business_logic
         string MakeString();
 
         void SetFavorite();
+
+        public string GetPhone();
+
+        public void MakeNewCustomer(ILocation store);
+
     }
 }

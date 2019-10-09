@@ -14,5 +14,9 @@ namespace business_logic
         public void AddClient(ICustomer addMe);
 
         public bool comparePW(string input);
+
+        public ICustomer GetMgr();
+
+        public void MangeLocation();
     }
 }

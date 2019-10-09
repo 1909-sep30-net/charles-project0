@@ -4,7 +4,7 @@ using System.Text;
 
 namespace business_logic
 {
-    interface IOrder
+    public interface IOrder
     {
         public void updateTotal();
         public void getTodaysDate();

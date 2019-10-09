@@ -6,12 +6,12 @@ using System.Text;
 
 namespace business_logic
 {
-    class Order
+    public class Order : IOrder
     {
         //unique id
         private long orderID { get; set; }
         //who is buying
-        private Customer custID { get; set; }
+        private Customer cust { get; set; }
         
         //total cost of order
         private double totalCost;
@@ -24,7 +24,35 @@ namespace business_logic
 
         //lock the order in before check-out
         private bool orderIsLocked { get; set; }
+        private bool orderFulfulled { get; set; }
+        public Order() // blank constructor
+        {
+            this.orderID = 0;//always the first one.
+            this.cust = new Customer("n/a", "n/a", "n/a");//dummy entry
+            this.totalCost = 0.0;
+            this.orderDate = 14920101; //yyyymmdd, apparently columbus ordered this via his cell phone on the way from Spain.
+            this.orderFulfulled = true;
+            this.orderIsLocked = true;
+        }
 
+        public void updateTotal()
+        {
+            ;
+        }
 
+        public void getTodaysDate()
+        {
+            
+        }
+
+        public void addItemToOrder()
+        {
+            ;
+        }
+
+        public void removeItemFromOrder()
+        {
+            ;
+        }
     }
 }

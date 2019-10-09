@@ -7,9 +7,17 @@ namespace user_inteface
     class Program
     {
         static void Main(string[] args)
-        {
+        {      
+            //TEMPORARY
             //set up location
-            ILocation store = new Location("Downtown", 1, 12345, "pickleJar42");
+            //after serialization, load the location information
+            ILocation store = new Location( "Downtown", 1, 12345, "pickleJar42" );
+
+            store.PrintInfo();
+
+            NapTime(3000);
+
+            //purely UI and temporary
             string manager = "Soupy";
             string product = "Robot";
             string service = "Sales";
@@ -23,7 +31,7 @@ namespace user_inteface
                 Console.WriteLine("Please make a choice");
                 Console.WriteLine("1. Returning Customer\n"
                                 + "2. New Customer\n\n\n"
-                                + "3. ---->mgmt<----\n"
+                                + "3. ---->mgmt<----\n" //make this invisible....tie it to a different number.
                                 + "4. Shutdown");
 
 
@@ -36,14 +44,40 @@ namespace user_inteface
                         NapTime(1000);
                         break;
                     case '2':
-                        Console.Write("Please Tell Us\nWho You Are :\n");
-                        NapTime(1000);
-                        GetCustomer();
+                        Console.Clear();
+                        Console.Write("Welcome New Customer.\n\nPlease tell us\nwho you are, so we can process, your order effectively.\nLoading New Customer Menu\n...");
+                        NapTime(3000);
+                        MakeNewCustomer(store);
 
                         break;
                     case '3':
                         Console.Write("Please Log In :\n");
-                        NapTime(1000);
+                        
+                        //setup check
+                        int count = 3;
+                        bool oktogo = false;
+
+                        //true true at first...
+                        //count down number of attempts
+                        //check the password entered
+                        //fail at the third try (maybe later lock the system)
+                        while(count > 0 && !oktogo)
+                        {
+                            //check the password 
+                            if( store.comparePW( Console.ReadLine()) )
+                            {
+                                oktogo = true;
+                                Console.WriteLine("Welcome Manager!");
+                            }
+                            Console.WriteLine("...nope...");
+                            count--;
+                        }
+                        if (!oktogo)
+                        {
+                            Console.WriteLine("...failure, your tampering has been noted... :) ");
+                        }
+
+                        NapTime(3000);
                         break;
                     case '4':
                         Console.Write("Shutting Down....\n");
@@ -66,7 +100,7 @@ namespace user_inteface
             Thread.Sleep(time);
         }
 
-        static void GetCustomer()
+        static void MakeNewCustomer(ILocation store)
         {
             //get sample input.
             Console.Clear();
@@ -80,22 +114,25 @@ namespace user_inteface
 
             string cn = Console.ReadLine();
 
-            Customer sample = new Customer(fn,ln,cn);
+            Customer customer = new Customer(fn,ln,cn);
 
             //confirm that data is correct.
-            Console.WriteLine($"Welcome:{ sample.GetfName() } {sample.GetlName() } at {sample.GetPhone() }"
-                            + "Is your information correct?\n 1: Yes, 2: No\n\n");
+            Console.WriteLine($"Welcome:{ customer.GetfName() } {customer.GetlName() } at {customer.GetPhone() }"
+                            + "\nIs your information correct?\n 1: Yes, 2: No\n\n");
             
             string read = Console.ReadLine();
             bool sentinalConf = false;
 
             if (read == "1")
             {
+                Console.Clear();
                 sentinalConf = true;
+                Console.WriteLine("Thank You.\nRecording your information...");
+                store.AddClient(customer);
                 NapTime(1000);
-                Console.WriteLine("Thank You.");
             }
 
+            //enter customer's information from ui
             while(!sentinalConf)
             {
                 Console.Clear();
@@ -104,9 +141,9 @@ namespace user_inteface
                     string choice = "NOPE";
                     
                     Console.WriteLine($"Enter a Number for Correction or 0 to finish: "
-                        + $"\n1: { sample.GetfName() } "
-                        + $"\n2. { sample.GetlName() } "
-                        + $"\n3. { sample.GetPhone() } " );
+                        + $"\n1: { customer.GetfName() } "
+                        + $"\n2. { customer.GetlName() } "
+                        + $"\n3. { customer.GetPhone() } " );
 
                 choice = Console.ReadLine();
 
@@ -115,20 +152,20 @@ namespace user_inteface
                     case "1":
                         Console.Clear();
                         Console.WriteLine("Re-Enter your first-name: ");
-                        sample.SetfName(Console.ReadLine());
+                        customer.SetfName(Console.ReadLine());
 
                         break;
                     case "2":
                         Console.Clear();
                         Console.WriteLine("Re-Enter your last-name: ");
-                        sample.SetlName(Console.ReadLine());
+                        customer.SetlName(Console.ReadLine());
 
 
                         break;
                     case "3":
                         Console.Clear();
                         Console.WriteLine("Re-Enter your phone-number: ");
-                        sample.SetPhone(Console.ReadLine());
+                        customer.SetPhone(Console.ReadLine());
 
 
                         break;
@@ -141,9 +178,9 @@ namespace user_inteface
                 }
 
             }//end while loop
-
-            Console.WriteLine($"Thank You, {sample.GetfName()}");
-            NapTime(1000);
+            Console.Clear();
+            Console.WriteLine($"Thank You, {customer.GetfName()}, \nPlease log in at the main menu\nLoading..");
+            NapTime(3000);
             //stub here
             //correct entry and store customer.
 

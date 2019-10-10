@@ -6,14 +6,25 @@ namespace business_logic
 {
     public class Product : IProduct
     {
-        private long prodID { get; set; }
-        private string productDesc { get; set; }
-        private string salesBlurb { get; set; }
-        private double cost { get; set; }
-        private double salePrice { get; set; }
-        private double saleValue { get; set; }
+        private long prodID;
+        private string productDesc;
+        private string salesBlurb;
+        private double cost;
+        public double salePrice { get; }
+        private double saleValue;
+        private int quantityOnHand;
+        public int QuantityOnHand 
+        { 
+                get
+                {
+                    return this.quantityOnHand;
+                }
 
-        private int quantityOnHand { get; set; }
+                private set
+                {
+                    quantityOnHand = value;
+                }
+         }
 
         public Product(string desc, string sellwords, double cost)
         {
@@ -33,7 +44,10 @@ namespace business_logic
             this.productDesc = desc;
             this.salesBlurb = sellwords;
             this.cost = cost;
-            this.salePrice = cost * 1.5;
+
+            //markup is automatic (can be changed per business requirements)
+            this.salePrice = cost * 1.5; 
+            
             this.saleValue = salePrice - cost;
             this.quantityOnHand = qty;
         }
@@ -45,7 +59,7 @@ namespace business_logic
 
         public void AdjustQty(int adjustment)
         {
-            this.salePrice += adjustment;
+            this.quantityOnHand += adjustment;
         }
 
         public string GetTheName()
@@ -53,9 +67,19 @@ namespace business_logic
             return this.productDesc;
         }
 
+        private void setQuantityOnHand( int adustment)
+        {
+            this.QuantityOnHand += adustment;
+        }
+
         public int GetStockTotal()
         {
             return this.quantityOnHand;
+        }
+
+        private void SetSalePrice()
+        {
+            ;
         }
 
         public double GetSalePrice()

@@ -76,7 +76,7 @@ namespace user_inteface
                                 oktogo = true;
 
                                 //manage the location
-                                store.MangeLocation();
+                                MangeLocation(store);
                                 break;
                             }
                             Console.WriteLine("...nope...");
@@ -101,6 +101,90 @@ namespace user_inteface
                 
             }
         }//end main method
+
+        ///////////////////////////////////////// Begin store management UI//////////////
+
+        static public void MangeLocation(ILocation store)
+        {
+            //sentinel
+            bool done = false;
+            string choice = "none";
+
+            while (!done)
+            {
+                Console.Clear();
+
+                //prompt
+                Console.WriteLine( store.LocMenuStr() );
+
+                //get the choice
+                choice = Console.ReadLine();
+
+                //logic for choice
+                switch (choice)
+                {
+                    case "1":
+                        Console.Clear();
+                        PrintInv(store);
+                        Console.WriteLine("Press Any Key To Exit:");
+                        Console.ReadLine();
+                        break;
+                    case "2":
+                        Console.Clear();
+                        PrintReciepts(store);
+                        Console.WriteLine("Press Any Key To Exit:");
+                        Console.ReadLine();
+                        break;
+                    case "3":
+                        break;
+                    case "4":
+                        break;
+                    case "5":
+                        done = true;
+                        break;
+                    default:
+                        Console.WriteLine("Exiting");
+                        break;
+                }
+            }
+        }
+
+        public static string ManageLocMenu()
+        {
+            return ("\nWelcome Manager"
+            + "\nPlease Choose One Of The Following"
+            + "\n\n1. Store Inventory" //need submenu
+            + "\n2. Order History"     //need submenu
+            + "\n3. Client List"       //
+            + "\n4. Sales Reporting"
+            + "\n5. Exit Management Menu"
+             );
+
+
+        }
+
+        static void PrintInv(ILocation store)
+        {
+            Console.WriteLine("Inventory On Hand");
+            //visible format
+            for (int i = 0; i < store.GetInventory().Count; i++)
+            {
+                Console.WriteLine($"Item: {store.GetInventory()[i].GetTheName() } Quantity: { store.GetInventory()[i].QuantityOnHand } ");
+            }
+        }
+
+        static void PrintReciepts(ILocation store)
+        {
+            Console.WriteLine("Recent Orders");
+            //visible format
+            for (int i = 0; i < store.GetReceipts().Count; i++)
+            {
+
+                Console.WriteLine($"Order {i}: Customer: { store.GetReceipts()[i].GetCustomer().GetPhone() } Qty Items: {store.GetReceipts()[i].ReturnTotalItems() } Sale: { store.GetReceipts()[i].GetTotal() } ");
+            }
+        }
+
+        ///////////////////////////////////////// end store management UI//////////////
 
         //shortcut for pausing
         //NapTime(int time in milliseconds)

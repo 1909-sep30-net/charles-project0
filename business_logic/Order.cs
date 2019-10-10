@@ -9,24 +9,27 @@ namespace business_logic
     public class Order : IOrder
     {
         //unique id
-        private long orderID { get; set; }
+        private long orderID;
+        
         //who is buying
-        private Customer cust { get; set; }
+        private Customer cust;
         
         //total cost of order
         private double totalCost;
 
         //whats being ordered and how much
         private List< Tuple< IProduct, int > > itemsOrdered;
-
+        
+        //total number of items on order
         private int qtyAllItems;
 
         //when was it ordered
-        private int orderDate { get; set; }
+        private int orderDate;
 
         //lock the order in before check-out
-        private bool orderIsLocked { get; set; }
-        private bool orderFulfulled { get; set; }
+        private bool orderIsLocked;
+        private bool orderFulfulled;
+        
         public Order() // blank constructor
         {
             this.orderID = 0;//always the first one.
@@ -42,7 +45,7 @@ namespace business_logic
         public void UpdateTotal( Tuple<IProduct, int> goods)
         {
             //Item sale price * number of items being ordered.
-            this.totalCost += goods.Item1.GetSalePrice() * goods.Item2;
+            this.totalCost += goods.Item1.salePrice * goods.Item2;
         }
 
         public double GetTotal()

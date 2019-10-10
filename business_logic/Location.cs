@@ -10,9 +10,9 @@ namespace business_logic
     public class Location : ILocation
     {
         //unique id
-        private int locID { get; set; }
-        private string locName { get; set; }
-        private int region { get; set; }
+        private int locID;
+        private string locName;
+        private int region;
 
         //product id, quantity
         private List<IProduct> inventory;
@@ -90,6 +90,13 @@ namespace business_logic
             this.inventory.Remove( remMe );
         }
 
+        //getter, manually written
+
+        public List<IProduct> GetInventory()
+        {
+            return this.inventory;
+        }
+
         //adjust the quantity of an item in inventory.
         public void AdjustInv(string prod, int qty)
         {
@@ -97,6 +104,11 @@ namespace business_logic
 
             element.AdjustQty(qty);
 
+        }
+
+        public List<IOrder> GetReceipts()
+        {
+            return this.receipts;
         }
 
         //add  a customer to the client list
@@ -125,59 +137,15 @@ namespace business_logic
         }
 
         ////////////////////////////////////////////////////////////
-        ///   Manage the Location
-        ///   TODO:
-        ///       Add a Set Location
-        ///       Add or Remove Inventory
-        ///       Adjust Inventory Directly
-
-        public void MangeLocation()
-        {
-            //sentinel
-            bool done = false;
-            string choice = "none";
-
-            while(!done)
-            {
-                Console.Clear();
-                
-                //prompt
-                Console.WriteLine(ManageLocMenu() );
-                
-                //get the choice
-                choice = Console.ReadLine();
-
-                //logic for choice
-                switch(choice)
-                {
-                    case "1":
-                        Console.Clear();
-                        PrintInv();
-                        Console.WriteLine("Press Any Key To Exit:");
-                        Console.ReadLine();
-                        break;
-                    case "2":
-                        Console.Clear();
-                        PrintReciepts();
-                        Console.WriteLine("Press Any Key To Exit:");
-                        Console.ReadLine();
-                        break;
-                    case "3":
-                        break;
-                    case "4":
-                        break;
-                    case "5":
-                        done = true;
-                        break;
-                    default:
-                        Console.WriteLine("Exiting");
-                        break;
-                }
-            }
-        }
-
-
-        public string ManageLocMenu()
+        //   Manage the Location
+        //   TODO:
+        //       Add a Set Location
+        //       Add or Remove Inventory
+        //       Adjust Inventory Directly
+        //      
+   
+        //returns a LocationMenu
+        public string LocMenuStr()
         {
             return ("\nWelcome Manager"
             + "\nPlease Choose One Of The Following"
@@ -190,28 +158,38 @@ namespace business_logic
 
 
         }
-        /// 
-        /// ///////////////////////////////////////////////////////
-        //
-        private void PrintInv()
+        
+        //return a string that describes the inventory on hand.
+        private string InvToStr()
         {
-            Console.WriteLine("Inventory On Hand");
-            //visible format
+            string retThis = "";
+
+            retThis += "Inventory On Hand";
+
+            //build the output
             for (int i = 0; i < this.inventory.Count; i++)
             {
-                Console.WriteLine($"Item: {this.inventory[i].GetTheName() } Quantity: { this.inventory[i].GetStockTotal() } ");
+                retThis+= ($"Item: {this.inventory[i].GetTheName() } Quantity: { this.inventory[i].QuantityOnHand } ");
             }
+
+            return retThis;
         }
 
-        private void PrintReciepts()
+        //returns a string that describes the recent orders
+        private string RecieptsToStr()
         {
-            Console.WriteLine("Recent Orders");
-            //visible format
+            string retThis = "";
+            
+            retThis += ("Recent Orders");
+            
+            //build the output
             for (int i = 0; i < this.receipts.Count; i++)
             {
                 
-                Console.WriteLine($"Order {i}: Customer: { this.receipts[i].GetCustomer().GetPhone() } Qty Items: {this.receipts[i].ReturnTotalItems() } Sale: { this.receipts[i].GetTotal() } ");
+                retThis += ($"Order {i}: Customer: { this.receipts[i].GetCustomer().GetPhone() } Qty Items: {this.receipts[i].ReturnTotalItems() } Sale: { this.receipts[i].GetTotal() } ");
             }
+
+            return retThis;
         }
     }
 }

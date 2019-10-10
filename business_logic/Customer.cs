@@ -7,15 +7,11 @@ namespace business_logic
 {
     public class Customer: ICustomer
     {
-        //unique id
-        private long custID { get; set; }
-
-        private string fName { get; set; }
-
-        private string lName { get; set; }
-
-        // phone number
-        private string phoneNum { get; set; }
+        //fields
+        private long custID;
+        private string fName;
+        private string lName;
+        private string phoneNum;
 
         //simple constructor
         public Customer(string first, string last, string phone)

@@ -17,6 +17,10 @@ namespace business_logic
 
         public ICustomer GetMgr();
 
-        public void MangeLocation();
+        public string LocMenuStr();
+
+        public List<IProduct> GetInventory();
+        public List<IOrder> GetReceipts();
+
     }
 }

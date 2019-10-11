@@ -7,7 +7,21 @@ namespace business_logic
     public class Product : IProduct
     {
         private long prodID;
+
+
         private string productDesc;
+        public string ProductDesc
+        {
+            get
+            {
+                return this.productDesc;
+            }
+            private set
+            {
+                this.productDesc = value;
+            }
+        }
+
         private string salesBlurb;
         private double cost;
         public double SalePrice { get; }
@@ -60,11 +74,6 @@ namespace business_logic
         public void AdjustQty(int adjustment)
         {
             this.quantityOnHand += adjustment;
-        }
-
-        public string GetTheName()
-        {
-            return this.productDesc;
         }
 
         private void SetQuantityOnHand( int adustment)

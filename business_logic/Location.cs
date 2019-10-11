@@ -100,7 +100,7 @@ namespace business_logic
         //adjust the quantity of an item in inventory.
         public void AdjustInv(string prod, int qty)
         {
-            IProduct element = inventory.Find(e => e.GetTheName() == prod );
+            IProduct element = inventory.Find(e => e.ProductDesc == prod );
 
             element.AdjustQty(qty);
 
@@ -115,6 +115,12 @@ namespace business_logic
         public void AddClient( ICustomer addMe)
         {
             this.custList.Add(addMe);
+
+            //add this ID to the customer
+            //makes for quick getting from the list.
+            //probably better to get the id generated in the SQL database?
+            addMe.CustID = this.custList.Count; 
+
         }
 
         public void RemClient(ICustomer remMe)
@@ -160,33 +166,52 @@ namespace business_logic
         }
         
         //return a string that describes the inventory on hand.
-        private string InvToStr()
+        public string InvToStr()
         {
-            string retThis = "";
+            string retThis = "TEST TEST TEST";
 
-            retThis += "Inventory On Hand";
+            retThis += "Inventory On Hand\n";
 
             //build the output
             for (int i = 0; i < this.inventory.Count; i++)
             {
-                retThis+= ($"Item: {this.inventory[i].GetTheName() } Quantity: { this.inventory[i].QuantityOnHand } ");
+                retThis+= ($"Item: {this.inventory[i].ProductDesc } Quantity: { this.inventory[i].QuantityOnHand } \n");
             }
+
+            retThis += "\nTEST TEST TEST";
 
             return retThis;
         }
 
         //returns a string that describes the recent orders
-        private string RecieptsToStr()
+        public string RecieptsToStr()
         {
             string retThis = "";
             
-            retThis += ("Recent Orders");
+            retThis += ("Recent Orders\n");
             
             //build the output
             for (int i = 0; i < this.receipts.Count; i++)
             {
                 
-                retThis += ($"Order {i}: Customer: { this.receipts[i].GetCustomer().PhoneNum } Qty Items: {this.receipts[i].ReturnTotalItems() } Sale: { this.receipts[i].GetTotal() } ");
+                retThis += ($"Order {i}: Customer: { this.receipts[i].Cust.PhoneNum } Qty Items: {this.receipts[i].ReturnTotalItems() } Sale: { this.receipts[i].GetTotal() } \n");
+            }
+
+            return retThis;
+        }
+
+        //customer list
+        public string ClientsToStr()
+        {
+            string retThis = "";
+
+            retThis += ($"Clients: \nQty: { this.custList.Count } \n");
+
+            //build the output
+            for (int i = 0; i < this.custList.Count; i++)
+            {
+
+                retThis += ($"ID: Customer: { this.custList[i].CustID } : Customer: { this.custList[i].LName }, { this.custList[i].FName }  Phone: { this.custList[i].PhoneNum }\n");
             }
 
             return retThis;

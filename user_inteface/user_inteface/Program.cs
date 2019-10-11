@@ -54,7 +54,7 @@ namespace user_inteface
                         //get the manager to make a new customer !
                         //had to use an end-run in order to follow separation of concerns for WHO makes the customer... 
                         //and the ui doesn't
-                        store.GetMgr().MakeNewCustomer(store);
+                        MakeNewCustomer(store);
 
                         break;
                     case "3":
@@ -102,6 +102,111 @@ namespace user_inteface
             }
         }//end main method
 
+        ///Customer Management////////////////////////////////////////////////////////////
+        //
+        //  UI methods for interacting with Business Logic
+        //
+
+        static void MakeNewCustomer(ILocation store)
+        {
+            Console.Clear();
+            //get sample input.
+            Console.Write("First Name: ");
+            string fn = Console.ReadLine();
+
+            Console.Write("Last Name: ");
+            string ln = Console.ReadLine();
+
+            Console.Write("Cell Phone Number: ");
+
+            string cn = Console.ReadLine();
+
+            //####AT THIS POINT, CONSIDER RECORDING A PASSWORD##########
+
+            //create the customer
+            ICustomer customer = new Customer(fn, ln, cn);
+
+            //confirm that data is correct.
+            Console.WriteLine($"Welcome:{ customer.FName } {customer.LName } at {customer.PhoneNum }"
+                            + "\nIs your information correct?\n 1: Yes, 2: No\n\n");
+
+            string read = Console.ReadLine();
+            bool sentinalConf = false;
+
+            //
+            //if it is a valid entry
+            //added to location's client-list
+            //otherwise is corrected
+
+            //confirmed as valid
+            if (read == "1")
+            {
+                Console.Clear();
+                sentinalConf = true;
+                Console.WriteLine($"Thank You, {customer.FName}, \nPlease log in at the main menu\n\nRecording your information...");
+
+                //is passed by reference, so all changes from here on out affect the reference.
+                store.AddClient(customer);
+
+                Thread.Sleep(3000);
+            }
+
+            //enter and correct customer info or exit to main menu.
+            while (!sentinalConf)
+            {
+                Console.Clear();
+                Console.WriteLine("Please correct your information");
+                Thread.Sleep(1000);
+                string choice = "NOPE";
+
+                Console.WriteLine($"Enter a Number for Correction or 0 to finish: "
+                    + $"\n1: { customer.FName } "
+                    + $"\n2. { customer.LName } "
+                    + $"\n3. { customer.PhoneNum } " 
+                    + "\n\nEnter 9 to Cancel and Exit");
+
+                choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        Console.Clear();
+                        Console.WriteLine("Re-Enter your first-name: ");
+                        customer.FName = Console.ReadLine();
+                        break;
+                    case "2":
+                        Console.Clear();
+                        Console.WriteLine("Re-Enter your last-name: ");
+                        customer.LName = Console.ReadLine();
+                        break;
+                    case "3":
+                        Console.Clear();
+                        Console.WriteLine("Re-Enter your phone-number: ");
+                        customer.PhoneNum = Console.ReadLine() ;
+                        break;
+                    case "0":
+                        sentinalConf = true;
+                        Console.Clear();
+                        Console.WriteLine($"Thank You, {customer.FName}, \nPlease log in at the main menu\nRecording Your Information...");
+
+                        //confirmed as Factual so, add to the client-list.
+                        store.AddClient(customer);
+                        break;
+                    default:
+                        //any other entry other than relevant choices lead to no-record and exit.
+                        customer = null;
+                        Console.Clear();
+                        Console.WriteLine($"Thank You, \nCanceling and Returning to Main Menue...");
+                        sentinalConf = true;
+                        break;
+                }
+
+            }//end while loop
+
+        }
+
+        ///////end  new customer
+
         ///////////////////////////////////////// Begin store management UI//////////////
 
         static public void MangeLocation(ILocation store)
@@ -116,6 +221,7 @@ namespace user_inteface
 
                 //prompt
                 Console.WriteLine( store.LocMenuStr() );
+                
 
                 //get the choice
                 choice = Console.ReadLine();
@@ -125,17 +231,21 @@ namespace user_inteface
                 {
                     case "1":
                         Console.Clear();
-                        PrintInv(store);
+                        Console.WriteLine( store.InvToStr() );
                         Console.WriteLine("Press Any Key To Exit:");
                         Console.ReadLine();
                         break;
                     case "2":
                         Console.Clear();
-                        PrintReciepts(store);
+                        Console.WriteLine( store.RecieptsToStr() );
                         Console.WriteLine("Press Any Key To Exit:");
                         Console.ReadLine();
                         break;
                     case "3":
+                        Console.Clear();
+                        Console.WriteLine( store.ClientsToStr() );
+                        Console.WriteLine("Press Any Key To Exit:");
+                        Console.ReadLine();
                         break;
                     case "4":
                         break;
@@ -149,40 +259,6 @@ namespace user_inteface
             }
         }
 
-        public static string ManageLocMenu()
-        {
-            return ("\nWelcome Manager"
-            + "\nPlease Choose One Of The Following"
-            + "\n\n1. Store Inventory" //need submenu
-            + "\n2. Order History"     //need submenu
-            + "\n3. Client List"       //
-            + "\n4. Sales Reporting"
-            + "\n5. Exit Management Menu"
-             );
-
-
-        }
-
-        static void PrintInv(ILocation store)
-        {
-            Console.WriteLine("Inventory On Hand");
-            //visible format
-            for (int i = 0; i < store.GetInventory().Count; i++)
-            {
-                Console.WriteLine($"Item: {store.GetInventory()[i].GetTheName() } Quantity: { store.GetInventory()[i].QuantityOnHand } ");
-            }
-        }
-
-        static void PrintReciepts(ILocation store)
-        {
-            Console.WriteLine("Recent Orders");
-            //visible format
-            for (int i = 0; i < store.GetReceipts().Count; i++)
-            {
-
-                Console.WriteLine($"Order {i}: Customer: { store.GetReceipts()[i].GetCustomer().PhoneNum } Qty Items: {store.GetReceipts()[i].ReturnTotalItems() } Sale: { store.GetReceipts()[i].GetTotal() } ");
-            }
-        }
 
         ///////////////////////////////////////// end store management UI//////////////
 

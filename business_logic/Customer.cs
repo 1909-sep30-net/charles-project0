@@ -9,8 +9,44 @@ namespace business_logic
     {
         //fields
         private long custID;
+
+        public long CustID
+        {
+            get
+            {
+                return this.custID;
+            }
+            set
+            {
+                this.custID = value;
+            }
+        }
         private string fName;
+        public string FName
+        {
+            get
+            {
+                return this.fName;
+            }
+            set
+            {
+                this.fName = value;
+            }
+        }
         private string lName;
+
+        public string LName
+        {
+            get
+            {
+                return this.lName;
+            }
+            set
+            {
+                this.lName = value;
+            }
+        }
+        
 
         private string phoneNum;
         public string PhoneNum
@@ -19,7 +55,7 @@ namespace business_logic
             {
                 return this.phoneNum;
             }
-            private set
+            set
             {
                 this.phoneNum = value;
             }
@@ -38,6 +74,7 @@ namespace business_logic
 
         }
 
+
         public string MakeString()
         {
             //Fix this
@@ -51,126 +88,7 @@ namespace business_logic
             throw new NotImplementedException();
         }
 
-        public string GetfName()
-        {
-            return this.fName;
-        }
 
-        public void SetfName(string change)
-        {
-            this.fName = change;
-        }
-
-
-
-        public string GetlName()
-        {
-            return this.lName;
-        }
-
-        public void SetlName(string change)
-        {
-            this.lName = change;
-        }
-
-        public void SetPhone(string change)
-        {
-            this.phoneNum = change;
-        }
-        
-
-
-        ////////////////////////////////////////
-        // This will require adjustment: can return info to the UI, but cannot have any Console.WriteLines, etc here.
-
-        public void MakeNewCustomer(ILocation store)
-        {
-            Console.Clear();
-            //get sample input.
-            Console.Write("First Name: ");
-            string fn = Console.ReadLine();
-
-            Console.Write("Last Name: ");
-            string ln = Console.ReadLine();
-
-            Console.Write("Cell Phone Number: ");
-
-            string cn = Console.ReadLine();
-
-            Customer customer = new Customer(fn, ln, cn);
-
-            //confirm that data is correct.
-            Console.WriteLine($"Welcome:{ customer.GetfName() } {customer.GetlName() } at {customer.PhoneNum }"
-                            + "\nIs your information correct?\n 1: Yes, 2: No\n\n");
-
-            string read = Console.ReadLine();
-            bool sentinalConf = false;
-
-            if (read == "1")
-            {
-                Console.Clear();
-                sentinalConf = true;
-                Console.WriteLine("Thank You.\nRecording your information...");
-                
-                //add a new client to the list
-                store.AddClient(customer);
-                
-                Thread.Sleep(1000);
-            }
-
-            //enter customer's information from ui
-            while (!sentinalConf)
-            {
-                Console.Clear();
-                Console.WriteLine("Please correct your information");
-                Thread.Sleep(1000);
-                string choice = "NOPE";
-
-                Console.WriteLine($"Enter a Number for Correction or 0 to finish: "
-                    + $"\n1: { customer.GetfName() } "
-                    + $"\n2. { customer.GetlName() } "
-                    + $"\n3. { customer.PhoneNum } ");
-
-                choice = Console.ReadLine();
-
-                switch (choice)
-                {
-                    case "1":
-                        Console.Clear();
-                        Console.WriteLine("Re-Enter your first-name: ");
-                        customer.SetfName(Console.ReadLine());
-
-                        break;
-                    case "2":
-                        Console.Clear();
-                        Console.WriteLine("Re-Enter your last-name: ");
-                        customer.SetlName(Console.ReadLine());
-
-
-                        break;
-                    case "3":
-                        Console.Clear();
-                        Console.WriteLine("Re-Enter your phone-number: ");
-                        customer.SetPhone(Console.ReadLine());
-
-
-                        break;
-                    case "0":
-                        sentinalConf = true;
-                        break;
-                    default:
-                        sentinalConf = true;
-                        break;
-                }
-
-            }//end while loop
-            Console.Clear();
-            Console.WriteLine($"Thank You, {customer.GetfName()}, \nPlease log in at the main menu\nLoading..");
-            Thread.Sleep(3000);
-
-        }
-
-     
 
     }
 }

@@ -12,7 +12,19 @@ namespace business_logic
         private long orderID;
         
         //who is buying
-        private Customer cust;
+        private ICustomer cust;
+
+        public ICustomer Cust
+        {
+            get
+            {
+                return this.cust;
+            }
+            private set
+            {
+                this.cust = value;
+            }
+        }
         
         //total cost of order
         private double totalCost;
@@ -81,9 +93,5 @@ namespace business_logic
             return this.itemsOrdered.Count;
         }
 
-        public ICustomer GetCustomer()
-        {
-            return this.cust;
-        }
     }
 }

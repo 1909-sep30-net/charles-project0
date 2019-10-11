@@ -18,9 +18,14 @@ namespace business_logic
         public ICustomer GetMgr();
 
         public string LocMenuStr();
+        public string InvToStr();
+
+        public string RecieptsToStr();
+
+        public string ClientsToStr();
 
         public List<IProduct> GetInventory();
         public List<IOrder> GetReceipts();
-
+        
     }
 }

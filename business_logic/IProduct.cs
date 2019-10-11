@@ -7,15 +7,13 @@ namespace business_logic
     public interface IProduct
     {
         //have to put this here as the properties block needs to get through the interface.
+        public string ProductDesc { get; }
         public double SalePrice { get; }
         public int QuantityOnHand { get; }
 
         public double Profitability();
 
         public void AdjustQty(int adjustment);
-
-        public string GetTheName();
-
 
     }
     

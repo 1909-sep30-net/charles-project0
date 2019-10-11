@@ -11,7 +11,19 @@ namespace business_logic
         private long custID;
         private string fName;
         private string lName;
+
         private string phoneNum;
+        public string PhoneNum
+        {
+            get
+            {
+                return this.phoneNum;
+            }
+            private set
+            {
+                this.phoneNum = value;
+            }
+        }
 
         //simple constructor
         public Customer(string first, string last, string phone)
@@ -61,22 +73,20 @@ namespace business_logic
             this.lName = change;
         }
 
-
-        public string GetPhone()
-        {
-            return this.phoneNum;
-        }
-
         public void SetPhone(string change)
         {
             this.phoneNum = change;
         }
+        
 
-        //overloaded...
+
+        ////////////////////////////////////////
+        // This will require adjustment: can return info to the UI, but cannot have any Console.WriteLines, etc here.
+
         public void MakeNewCustomer(ILocation store)
         {
-            //get sample input.
             Console.Clear();
+            //get sample input.
             Console.Write("First Name: ");
             string fn = Console.ReadLine();
 
@@ -90,7 +100,7 @@ namespace business_logic
             Customer customer = new Customer(fn, ln, cn);
 
             //confirm that data is correct.
-            Console.WriteLine($"Welcome:{ customer.GetfName() } {customer.GetlName() } at {customer.GetPhone() }"
+            Console.WriteLine($"Welcome:{ customer.GetfName() } {customer.GetlName() } at {customer.PhoneNum }"
                             + "\nIs your information correct?\n 1: Yes, 2: No\n\n");
 
             string read = Console.ReadLine();
@@ -119,7 +129,7 @@ namespace business_logic
                 Console.WriteLine($"Enter a Number for Correction or 0 to finish: "
                     + $"\n1: { customer.GetfName() } "
                     + $"\n2. { customer.GetlName() } "
-                    + $"\n3. { customer.GetPhone() } ");
+                    + $"\n3. { customer.PhoneNum } ");
 
                 choice = Console.ReadLine();
 

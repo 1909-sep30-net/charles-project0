@@ -7,7 +7,7 @@ namespace business_logic
     public interface IProduct
     {
         //have to put this here as the properties block needs to get through the interface.
-        public double salePrice { get; }
+        public double SalePrice { get; }
         public int QuantityOnHand { get; }
 
         public double Profitability();
@@ -16,7 +16,6 @@ namespace business_logic
 
         public string GetTheName();
 
-        public int GetStockTotal();
 
     }
     

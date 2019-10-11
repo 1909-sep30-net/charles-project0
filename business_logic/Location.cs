@@ -186,7 +186,7 @@ namespace business_logic
             for (int i = 0; i < this.receipts.Count; i++)
             {
                 
-                retThis += ($"Order {i}: Customer: { this.receipts[i].GetCustomer().GetPhone() } Qty Items: {this.receipts[i].ReturnTotalItems() } Sale: { this.receipts[i].GetTotal() } ");
+                retThis += ($"Order {i}: Customer: { this.receipts[i].GetCustomer().PhoneNum } Qty Items: {this.receipts[i].ReturnTotalItems() } Sale: { this.receipts[i].GetTotal() } ");
             }
 
             return retThis;

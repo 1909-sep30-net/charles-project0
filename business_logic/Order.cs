@@ -45,7 +45,7 @@ namespace business_logic
         public void UpdateTotal( Tuple<IProduct, int> goods)
         {
             //Item sale price * number of items being ordered.
-            this.totalCost += goods.Item1.salePrice * goods.Item2;
+            this.totalCost += goods.Item1.SalePrice * goods.Item2;
         }
 
         public double GetTotal()

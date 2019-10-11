@@ -7,11 +7,11 @@ namespace business_logic
     public interface ICustomer
     {
         
+        public string PhoneNum { get; }
+
         string MakeString();
 
         void SetFavorite();
-
-        public string GetPhone();
 
         public void MakeNewCustomer(ILocation store);
 

@@ -180,7 +180,7 @@ namespace user_inteface
             for (int i = 0; i < store.GetReceipts().Count; i++)
             {
 
-                Console.WriteLine($"Order {i}: Customer: { store.GetReceipts()[i].GetCustomer().GetPhone() } Qty Items: {store.GetReceipts()[i].ReturnTotalItems() } Sale: { store.GetReceipts()[i].GetTotal() } ");
+                Console.WriteLine($"Order {i}: Customer: { store.GetReceipts()[i].GetCustomer().PhoneNum } Qty Items: {store.GetReceipts()[i].ReturnTotalItems() } Sale: { store.GetReceipts()[i].GetTotal() } ");
             }
         }
 

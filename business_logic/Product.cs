@@ -10,7 +10,7 @@ namespace business_logic
         private string productDesc;
         private string salesBlurb;
         private double cost;
-        public double salePrice { get; }
+        public double SalePrice { get; }
         private double saleValue;
         private int quantityOnHand;
         public int QuantityOnHand 
@@ -32,8 +32,8 @@ namespace business_logic
             this.productDesc = desc;
             this.salesBlurb = sellwords;
             this.cost = cost;
-            this.salePrice = cost * 1.5;
-            this.saleValue = salePrice - cost;
+            this.SalePrice = cost * 1.5;
+            this.saleValue = SalePrice - cost;
             this.quantityOnHand = 0;
         }
 
@@ -46,15 +46,15 @@ namespace business_logic
             this.cost = cost;
 
             //markup is automatic (can be changed per business requirements)
-            this.salePrice = cost * 1.5; 
+            this.SalePrice = cost * 1.5; 
             
-            this.saleValue = salePrice - cost;
+            this.saleValue = SalePrice - cost;
             this.quantityOnHand = qty;
         }
 
         public double Profitability()
         {
-            return this.salePrice - this.cost;
+            return this.SalePrice - this.cost;
         }
 
         public void AdjustQty(int adjustment)
@@ -67,24 +67,10 @@ namespace business_logic
             return this.productDesc;
         }
 
-        private void setQuantityOnHand( int adustment)
+        private void SetQuantityOnHand( int adustment)
         {
             this.QuantityOnHand += adustment;
         }
 
-        public int GetStockTotal()
-        {
-            return this.quantityOnHand;
-        }
-
-        private void SetSalePrice()
-        {
-            ;
-        }
-
-        public double GetSalePrice()
-        {
-            return this.salePrice;
-        }
     }
 }

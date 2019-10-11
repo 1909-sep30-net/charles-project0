@@ -152,7 +152,7 @@ namespace user_inteface
                     {
                         Console.Clear();
                         Console.WriteLine($"Welcome Back {thisCustomer.FName}!");
-                        Thread.Sleep(300);
+                        Thread.Sleep(1000);
 
                         string choice = "";
                         
@@ -178,8 +178,14 @@ namespace user_inteface
                                     case "2":
                                         Console.Clear();
                                         Console.WriteLine( thisCustomer.RecieptsToStr() );
+                                        Console.WriteLine("Press Enter to Continue");
+                                        string pause = Console.ReadLine();
                                         break;
                                 }
+                            }
+                            else if(choice == "x" || choice == "X")
+                            {
+                                break;
                             }
                             else
                             {

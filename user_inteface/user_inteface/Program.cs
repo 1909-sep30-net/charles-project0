@@ -150,10 +150,48 @@ namespace user_inteface
                     //check the password 
                     if ( pwValid(thisCustomer, pwEntered) )
                     {
+                        Console.Clear();
                         Console.WriteLine($"Welcome Back {thisCustomer.FName}!");
+                        Thread.Sleep(300);
+
+                        string choice = "";
                         
-                        //display the order screen.
-                        orderScreen(store, thisCustomer);
+                        while(choice != "x" || choice != "X")
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Enter the corisponding number for choice and press Enter.\n"
+                                        + "1. New Order\n"
+                                        + "2. Order History\n"
+                                        + "or enter X to exit:\t");
+
+                            choice = Console.ReadLine();
+                            
+                            if (choice == "1" || choice == "2")
+                            {
+                                switch(choice)
+                                {
+                                    case "1":
+                                        Console.Clear();
+                                        //display the order screen.
+                                        orderScreen(store, thisCustomer);
+                                        break;
+                                    case "2":
+                                        Console.Clear();
+                                        Console.WriteLine( thisCustomer.RecieptsToStr() );
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid Choice");
+                                Thread.Sleep(500);
+
+                            }
+
+                        }
+
+
+
 
 
                         Thread.Sleep(2000);

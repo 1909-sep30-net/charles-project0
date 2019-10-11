@@ -114,7 +114,7 @@ namespace business_logic
             for (int i = 0; i < this.CustOrders.Count; i++)
             {
 
-                retThis += ($"Order { this.CustOrders[i].OrderID } {this.CustOrders[i].}\n");
+                retThis += ($"Order No. { this.CustOrders[i].OrderID } Time: {this.CustOrders[i].Order_TimeStamp}\n");
                 //holds the line item
                 Tuple<IProduct, int> lineItem;
 

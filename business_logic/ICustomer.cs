@@ -19,6 +19,6 @@ namespace business_logic
         string MakeString();
 
         void SetFavorite();
-
+        public string RecieptsToStr();
     }
 }

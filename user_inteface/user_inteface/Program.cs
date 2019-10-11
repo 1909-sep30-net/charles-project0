@@ -121,7 +121,7 @@ namespace user_inteface
                 + "   your phone number "
                 + "    and password.\n\n");
 
-            Console.WriteLine("Phone Number?  : \t");
+            Console.Write("Phone Number?  : \t");
             string phEntered = Console.ReadLine();
             
             //look up the customer
@@ -132,21 +132,42 @@ namespace user_inteface
             //password protected account
             if(thisCustomer != null)
             {
-                Console.WriteLine("Welcome Back");
-                Console.WriteLine("Enter Your Password");
+                Console.Write("Please Enter Your Password: \t");
                 string pwEntered = Console.ReadLine();
+                bool auth = false;
 
-                Console.WriteLine($"Welcome Back {thisCustomer.FName}!");
+                //check the password
+                int tries = 4;
+                while (true)
+                {
+                    //out of tries?
+                    if(tries == 0)
+                    { break; }
 
-                //Customer menu here?
-
+                
+                    //check the password 
+                    if ( pwValid(thisCustomer, pwEntered) )
+                    {
+                        Console.WriteLine($"Welcome Back {thisCustomer.FName}!");
+                        Thread.Sleep(3000);
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Entry.");
+                        tries--;
+                        Console.Write("Try again: ");
+                        pwEntered = Console.ReadLine();
+                        Thread.Sleep(2000);
+                    }
+                }
                 //a pause
-                Thread.Sleep(3000);
+                
             }
             
         }
 
-        //retrieve the customer object.  Put in ILocation?
+        //retrieve the customer object.///////////////////////////////////////////
         static ICustomer GetTheCustomer(ILocation store, string phEntered)
         {
             int sentinal = 4;
@@ -310,27 +331,14 @@ namespace user_inteface
         
         ///////end  new customer
 
-        static bool pwValid( ICustomer cust )
+        static bool pwValid( ICustomer cust , string entry)
         {
-            //note the number of tries possible
-            int trys = 4;
-            string entry;
-            
-            while( trys > 0 )
-            {
-                //prompt
-                Console.WriteLine( "Enter  your Password: \t" );
-                //get the password 
-                entry = Console.ReadLine();
-                //valid entry?
                 if( entry == ( cust.CustID ) )
                 {
                     //OK!
                     return true;
                 }
-                trys--;
-            }
-
+            
             //nope
             return false;
         }

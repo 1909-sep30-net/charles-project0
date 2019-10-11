@@ -60,6 +60,13 @@ namespace business_logic
 
         //when was it ordered
         private string order_timeStamp;
+        public string Order_TimeStamp
+        {
+            get
+            {
+                return this.order_timeStamp;
+            }
+        }
 
         //lock the order in before check-out
         private bool orderIsLocked;

@@ -102,6 +102,34 @@ namespace business_logic
             throw new NotImplementedException();
         }
 
+        //returns a string that describes the recent orders
+        public string RecieptsToStr()
+        {
+            string retThis = "";
+
+            retThis += ("Recent Orders\n");
+
+            //build the output
+            //iterate through each order on the list of reciepts
+            for (int i = 0; i < this.CustOrders.Count; i++)
+            {
+
+                retThis += ($"Order { this.CustOrders[i].OrderID } {this.CustOrders[i].}\n");
+                //holds the line item
+                Tuple<IProduct, int> lineItem;
+
+                //iterate through each item on each order on the reciepts
+                for (int q = 0; q < this.CustOrders[i].ItemsOrdered.Count; q++)
+                {
+                    lineItem = this.CustOrders[i].ItemsOrdered[q];
+                    retThis += ($"\tItem: { lineItem.Item1.ProductDesc } Quantity: { lineItem.Item2 } \n");
+                }
+
+                
+            }
+
+            return retThis;
+        }
 
 
     }

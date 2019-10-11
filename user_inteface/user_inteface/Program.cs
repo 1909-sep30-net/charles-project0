@@ -375,19 +375,19 @@ namespace user_inteface
                     case "1":
                         Console.Clear();
                         Console.WriteLine( store.InvToStr() );
-                        Console.WriteLine("Press Any Key To Exit:");
+                        Console.WriteLine("Press Enter To Exit:");
                         Console.ReadLine();
                         break;
                     case "2":
                         Console.Clear();
                         Console.WriteLine( store.RecieptsToStr() );
-                        Console.WriteLine("Press Any Key To Exit:");
+                        Console.WriteLine("Press Enter To Exit:");
                         Console.ReadLine();
                         break;
                     case "3":
                         Console.Clear();
                         Console.WriteLine( store.ClientsToStr() );
-                        Console.WriteLine("Press Any Key To Exit:");
+                        Console.WriteLine("Press Enter To Exit:");
                         Console.ReadLine();
                         break;
                     case "4":
@@ -447,15 +447,12 @@ namespace user_inteface
 
                 if (choice == "X" || choice == "x")
                 {
-                    Console.WriteLine("Thank You!");
+                    Console.WriteLine("Thank You! You have Ordered the following:\n");
 
                     //add to the store's list of reciepts (list of orders)
                     // valid order? 
                     if (theOrder != null && theOrder.ItemsOrdered.Count != 0)
                     {
-                        Console.WriteLine("Recording information...");
-                        store.Reciepts.Add(theOrder);//to store reciepts
-
                         /////////update store inventory////////////
                         // as order is confirmed, update customer's inventory.
                         
@@ -468,15 +465,28 @@ namespace user_inteface
                             IProduct thisProduct = theOrder.ItemsOrdered[p].Item1;
                             
                             //adjust the quanity, can go down to zero.
-                            thisProduct.AdjustQty( -1 * quantity ); 
+                            thisProduct.AdjustQty( -1 * quantity );
 
+                            ///////////// output the order summary///////////////
+                            //
+
+                            Console.WriteLine($" Item: {thisProduct.ProductDesc} Qty: {quantity}\n" ) ;
+
+                            //
+                            /////////////////////////////////////////////////////
                         }
 
                         //
                         ///////////////////////////////////////
 
+                        Console.WriteLine("Thank You For Your Business");
+                        store.Reciepts.Add(theOrder);//to store reciepts
+
                         cust.CustOrders.Add(theOrder);//to customer history.
-                        Thread.Sleep(1000);
+
+                        Console.WriteLine("Press Enter To Continue");
+                        string pause = Console.ReadLine();
+                        
                     }
                     else
                     {
@@ -538,7 +548,7 @@ namespace user_inteface
                     Tuple<IProduct, int> lineItem = theOrder.ItemsOrdered[ theOrder.ItemsOrdered.Count - 1 ];
 
                     Console.WriteLine($"Confirming:  Item: { lineItem.Item1.ProductDesc } Quantity: { lineItem.Item2 } ");
-                    Console.WriteLine("Hit any key to continue");
+                    Console.WriteLine("Press Enter to Continue");
                     string pause = Console.ReadLine();
                     //
                     ////////////////////////////////////////////////////////////////////////

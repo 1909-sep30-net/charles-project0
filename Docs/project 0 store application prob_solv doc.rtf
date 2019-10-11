@@ -22,10 +22,10 @@ Create a store kiosk for customers an/or staff to log into in order store and pr
 \ul Functional Requirements\line\ulnone\par
 \f1\bullet\tab place orders to store locations for customers\f0  \cf1 DONE\cf0\f1\par
 \bullet\tab add a new customer\f0  \cf1 DONE\cf0\f1\par
-\bullet\tab search customers by name\f0  \cf1 (HAVE  PHONE, NEED NAME)\cf0\f1\par
-\bullet\tab display details of an order\f0  \f1\par
+\bullet\tab search customers by name\f0  \cf1 DONE (by phone, OKed by Instructor)\cf0\f1\par
+\bullet\tab display details of an order\f0  \cf1 DONE\cf0\f1\par
 \bullet\tab display all order history of a store location\f0  \cf1 DONE\cf0\f1\par
-\bullet\tab display all order history of a customer\par
+\bullet\tab display all order history of a customer\f0  \f1\par
 \bullet\tab input validation\f0  \f1\par
 \bullet\tab\f0 must include \f1 exception handling\f0  (try catch)\f1\par
 \bullet\tab persistent data (SQL); no products, prices, customers, etc. hardcoded in C#\par
@@ -40,10 +40,10 @@ Create a store kiosk for customers an/or staff to log into in order store and pr
 \f2\fs18  \f0\par
 \b\fs20 business logic\line\b0\par
 \f1\bullet\tab class library\f0  \cf1 DONE\cf0\f1\par
-\bullet\tab contains all business logic\par
-\bullet\tab contains domain classes (customer, order, store, product, etc.)\par
+\bullet\tab contains all business logic\f0  \f1\par
+\bullet\tab contains domain classes (customer, order, store, product, etc.)\f0  \cf1 DONE\cf0\f1\par
 \bullet\tab documentation with <summary> XML comments (optional: <params> and \line\f0\tab\f1 <return>)\par
-\bullet\tab has no dependency on UI or any input/output considerations\line\line\b data access\par
+\bullet\tab has no dependency on UI or any input/output considerations\f0  \cf1 MET\cf0\f1\line\line\b data access\par
 \b0\line\bullet\tab class library\par
 \bullet\tab contains scaffolded EF DbContext\par
 \bullet\tab contains data access logic but no business logic\par
@@ -54,7 +54,7 @@ Create a store kiosk for customers an/or staff to log into in order store and pr
 \bullet\tab focus on unit testing business logic; testing the console app is very low priority\par
 \f0\par
 \b\f1 user interface\cf1\f0  DONE\cf0\f1\par
-\b0\line\bullet\tab interactive console application\par
+\b0\line\bullet\tab interactive console application\f0  \f1\par
 \bullet\tab has only display- and input-related code\par
 \bullet\tab low-priority component, will be replaced when we move to project 1\par
 \f0\par
@@ -75,9 +75,9 @@ Create a store kiosk for customers an/or staff to log into in order store and pr
 \f0\tab\tab User must log in\tab\tab\cf1 DONE\cf0\par
 \tab\tab Manager must log in\tab\cf1 DONE\cf0\f1\par
 \line\ul location\par
-\ulnone\line\bullet\tab has an inventory\par
-\bullet\tab inventory decreases when orders are accepted\par
-\bullet\tab rejects orders that cannot be fulfilled with remaining inventory\par
+\ulnone\line\bullet\tab has an inventory\f0\tab\cf1 DONE\cf0\f1\par
+\bullet\tab inventory decreases when orders are accepted\f0  \cf1 DONE\cf0\f1\par
+\bullet\tab rejects orders that cannot be fulfilled with remaining inventory\f0  \cf1 DONE\cf0\f1\par
 \bullet\tab (optional: more than one inventory item decrements for a given product order, for \f0\tab\f1 at least one product)\f0  \par
 \line\ul\f1 product\f0\par
 \ulnone\par
@@ -85,6 +85,8 @@ Create a store kiosk for customers an/or staff to log into in order store and pr
 \tab Chosing a specific product is secondary, and can be implemented later, but must \line\tab be chosen soon.\par
 \par
 \tab Instructor mentioned pizzas or food or other services, which are going to have \line\tab their own related details.\par
+\par
+\cf1\tab Product is robot parts.\cf0\par
 \par
 \b Deliverable\b0 : \par
 \par

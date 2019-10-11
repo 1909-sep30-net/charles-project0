@@ -6,6 +6,10 @@ namespace business_logic
 {
     public interface IOrder
     {
+
+        public List<Tuple<IProduct, int>> ItemsOrdered { get; set; }
+
+        public string OrderID { get; set; }
         public void UpdateTotal(Tuple<IProduct, int> goods);
         public ICustomer Cust { get; }
         public double GetTotal();

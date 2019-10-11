@@ -1,5 +1,5 @@
 {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033\deflangfe1033{\fonttbl{\f0\fswiss\fprq2\fcharset0 Arial;}{\f1\fswiss\fprq2 Arial;}{\f2\fswiss\fprq2\fcharset0 Calibri;}}
-{\colortbl ;\red0\green0\blue0;}
+{\colortbl ;\red255\green0\blue0;\red0\green0\blue0;}
 {\*\generator Riched20 10.0.18362}{\*\mmathPr\mdispDef1\mwrapIndent1440 }\viewkind4\uc1 
 \pard\widctlpar\f0\fs20 The attached code was entirely my own work. \par
 \par
@@ -20,13 +20,13 @@ Date: 10-04-2019\par
 Create a store kiosk for customers an/or staff to log into in order store and process orders.\par
 \par
 \ul Functional Requirements\line\ulnone\par
-\f1\bullet\tab place orders to store locations for customers\par
-\bullet\tab add a new customer\par
-\bullet\tab search customers by name\par
-\bullet\tab display details of an order\par
-\bullet\tab display all order history of a store location\par
+\f1\bullet\tab place orders to store locations for customers\f0  \cf1 DONE\cf0\f1\par
+\bullet\tab add a new customer\f0  \cf1 DONE\cf0\f1\par
+\bullet\tab search customers by name\f0  \cf1 (HAVE  PHONE, NEED NAME)\cf0\f1\par
+\bullet\tab display details of an order\f0  \f1\par
+\bullet\tab display all order history of a store location\f0  \cf1 DONE\cf0\f1\par
 \bullet\tab display all order history of a customer\par
-\bullet\tab input validation\par
+\bullet\tab input validation\f0  \f1\par
 \bullet\tab\f0 must include \f1 exception handling\f0  (try catch)\f1\par
 \bullet\tab persistent data (SQL); no products, prices, customers, etc. hardcoded in C#\par
 \bullet\tab logging\par
@@ -39,7 +39,7 @@ Create a store kiosk for customers an/or staff to log into in order store and pr
 \ul\f0 Structural Requirements\ulnone\par
 \f2\fs18  \f0\par
 \b\fs20 business logic\line\b0\par
-\f1\bullet\tab class library\par
+\f1\bullet\tab class library\f0  \cf1 DONE\cf0\f1\par
 \bullet\tab contains all business logic\par
 \bullet\tab contains domain classes (customer, order, store, product, etc.)\par
 \bullet\tab documentation with <summary> XML comments (optional: <params> and \line\f0\tab\f1 <return>)\par
@@ -53,23 +53,27 @@ Create a store kiosk for customers an/or staff to log into in order store and pr
 \bullet\tab use TDD for some of the application\par
 \bullet\tab focus on unit testing business logic; testing the console app is very low priority\par
 \f0\par
-\b\f1 user interface\par
+\b\f1 user interface\cf1\f0  DONE\cf0\f1\par
 \b0\line\bullet\tab interactive console application\par
 \bullet\tab has only display- and input-related code\par
 \bullet\tab low-priority component, will be replaced when we move to project 1\par
 \f0\par
-\b object model\line\b0\par
+\b object model\par
+\par
+\cf1 DONE\cf0\line\b0\par
 \ul customer\par
 \ulnone\par
-\f1\bullet\tab has first name, last name, etc.\par
+\f1\bullet\tab has first name, last name, etc.\cf1\f0 DONE\cf0\f1\par
 \bullet\tab (optional: has a default store location to order from)\par
 \line\ul order\ulnone\par
-\line\bullet\tab has a store location\par
-\bullet\tab has a customer\par
-\bullet\tab has an order time (when the order was placed)\par
-\bullet\tab can contain multiple product types in the same order\par
-\bullet\tab rejects orders with unreasonably high product quantities\par
+\line\bullet\tab has a store location\f0  \cf1 DONE\cf0\f1\par
+\bullet\tab has a customer\f0  \cf1 DONE\cf0\f1\par
+\bullet\tab has an order time (when the order was placed)\f0  \cf1 DONE\cf0\f1\par
+\bullet\tab can contain multiple product types in the same order\f0  \cf1 DONE\cf0\f1\par
+\bullet\tab rejects orders with unreasonably high product quantities\f0  \cf1 DONE\cf0\f1\par
 \bullet\tab must have some additional business rules\par
+\f0\tab\tab User must log in\tab\tab\cf1 DONE\cf0\par
+\tab\tab Manager must log in\tab\cf1 DONE\cf0\f1\par
 \line\ul location\par
 \ulnone\line\bullet\tab has an inventory\par
 \bullet\tab inventory decreases when orders are accepted\par
@@ -184,13 +188,13 @@ Existing Location? Yes     -----------------\par
 \b Test Plan\b0\par
 \par
 \trowd\trgaph15\trleft-150\trrh691\trpaddl15\trpaddr15\trpaddfl3\trpaddfr3
-\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx9630 
+\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx9630 
 \pard\intbl\widctlpar Case\cell Purpose\cell Test Data\cell Expected Result\cell Actual Result\cell Pass/Fail\cell Comments\cell\row\trowd\trgaph15\trleft-150\trrh610\trpaddl15\trpaddr15\trpaddfl3\trpaddfr3
-\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx9630 
+\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx9630 
 \pard\intbl\widctlpar\cell\cell\cell\cell\cell\cell\cell\row\trowd\trgaph15\trleft-150\trrh610\trpaddl15\trpaddr15\trpaddfl3\trpaddfr3
-\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx9630 
+\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx9630 
 \pard\intbl\widctlpar\cell\cell\cell\cell\cell\cell\cell\row\trowd\trgaph15\trleft-150\trrh610\trpaddl15\trpaddr15\trpaddfl3\trpaddfr3
-\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx9630 
+\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx9630 
 \pard\intbl\widctlpar\cell\cell\cell\cell\cell\cell\cell\row 
 \pard\widctlpar\line\par
 \b\page\par
@@ -203,13 +207,13 @@ Sample Source Code?\par
 \b IV. Execute Test Plan\b0  (Filled Out Test Plan, as Planned in Part II)\par
 \par
 \trowd\trgaph15\trleft-150\trrh691\trpaddl15\trpaddr15\trpaddfl3\trpaddfr3
-\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx9630 
+\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx9630 
 \pard\intbl\widctlpar Case\cell Purpose\cell Test Data\cell Expected Result\cell Actual Result\cell Pass/Fail\cell Comments\cell\row\trowd\trgaph15\trleft-150\trrh610\trpaddl15\trpaddr15\trpaddfl3\trpaddfr3
-\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx9630 
+\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx9630 
 \pard\intbl\widctlpar\cell\cell\cell\cell\cell\cell\cell\row\trowd\trgaph15\trleft-150\trrh610\trpaddl15\trpaddr15\trpaddfl3\trpaddfr3
-\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx9630 
+\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx9630 
 \pard\intbl\widctlpar\cell\cell\cell\cell\cell\cell\cell\row\trowd\trgaph15\trleft-150\trrh610\trpaddl15\trpaddr15\trpaddfl3\trpaddfr3
-\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf1\clbrdrt\brdrw20\brdrs\brdrcf1\clbrdrr\brdrw20\brdrs\brdrcf1\clbrdrb\brdrw20\brdrs\brdrcf1 \cellx9630 
+\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx1423\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx2630\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx4911\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx6210\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx7470\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx8280\clbrdrl\brdrw20\brdrs\brdrcf2\clbrdrt\brdrw20\brdrs\brdrcf2\clbrdrr\brdrw20\brdrs\brdrcf2\clbrdrb\brdrw20\brdrs\brdrcf2 \cellx9630 
 \pard\intbl\widctlpar\cell\cell\cell\cell\cell\cell\cell\row 
 \pard\widctlpar\par
 \par

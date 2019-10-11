@@ -25,8 +25,15 @@ namespace business_logic
 
         public string ClientsToStr();
 
+        public List<IProduct> Inventory { get; set; }
+        public Dictionary<int, IProduct> ProdIndex { get; set; }
+
         public List<IProduct> GetInventory();
-        public List<IOrder> GetReceipts();
-        
+        public List<IOrder> Reciepts { get; set; }
+
+        public IOrder CreateOrder(ICustomer customer);
+
+        public string BuildMenuChoices();
+
     }
 }

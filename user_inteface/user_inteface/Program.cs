@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using business_logic;
+using System.Collections.Generic;
 
 namespace user_inteface
 {
@@ -23,7 +24,8 @@ namespace user_inteface
             store.AddClient(new Customer("Diana", "Callisto", "1267891057", "0000"));
             store.AddClient(new Customer("Ed", "Horse", "3571295978", "54321"));
 
-
+            
+            
             //purely UI and temporary
             string manager = "Soupy";
             string product = "Robot";
@@ -134,7 +136,7 @@ namespace user_inteface
             {
                 Console.Write("Please Enter Your Password: \t");
                 string pwEntered = Console.ReadLine();
-                bool auth = false;
+                
 
                 //check the password
                 int tries = 4;
@@ -149,7 +151,12 @@ namespace user_inteface
                     if ( pwValid(thisCustomer, pwEntered) )
                     {
                         Console.WriteLine($"Welcome Back {thisCustomer.FName}!");
-                        Thread.Sleep(3000);
+                        
+                        //display the order screen.
+                        orderScreen(store, thisCustomer);
+
+
+                        Thread.Sleep(2000);
                         break;
                     }
                     else
@@ -404,8 +411,149 @@ namespace user_inteface
         { 
             Thread.Sleep(time);
         }
+        
 
-     
+        //Placing Orders and Documenting Orders///////////////////////////////////////////////////////////////
+        //
+        // Not covered here: billing, we'll assume everyone pays cash or in packs of gum.
+        //
 
+        //Location will probably need to retain this in business_logic
+        static void orderScreen(ILocation store, ICustomer cust)
+        {
+            //prompt for an order
+            string choice = "";
+
+            Console.Clear();
+
+            Console.Write("Enter another product or");
+
+            //create the order
+            //IOrder batOrder = new Order(cust); //never EVER use the default constructor...
+            IOrder theOrder = new Order(cust); //never EVER use the default constructor...
+
+            while (choice != "X" || choice != "x")
+            {
+                //refesh
+                choice = "";
+
+                Console.WriteLine(" enter X to exit.");
+
+                Console.WriteLine(store.BuildMenuChoices());
+
+                Console.WriteLine("Item Number: \t");
+
+                choice = Console.ReadLine();
+
+                if (choice == "X" || choice == "x")
+                {
+                    Console.WriteLine("Thank You!");
+
+                    //add to the store's list of reciepts (list of orders)
+                    // valid order? 
+                    if (theOrder != null && theOrder.ItemsOrdered.Count != 0)
+                    {
+                        Console.WriteLine("Recording information...");
+                        store.Reciepts.Add(theOrder);//to store reciepts
+
+                        /////////update store inventory////////////
+                        // as order is confirmed, update customer's inventory.
+                        
+                        //iterate over the order
+                        for(int p = 0; p < theOrder.ItemsOrdered.Count; p ++)
+                        {
+                            //adjust store inventory based on the order.
+                            // Inventory stored in Product, so this is actually simple.
+                            int quantity = theOrder.ItemsOrdered[p].Item2;
+                            IProduct thisProduct = theOrder.ItemsOrdered[p].Item1;
+                            
+                            //adjust the quanity, can go down to zero.
+                            thisProduct.AdjustQty( -1 * quantity ); 
+
+                        }
+
+                        //
+                        ///////////////////////////////////////
+
+                        cust.CustOrders.Add(theOrder);//to customer history.
+                        Thread.Sleep(1000);
+                    }
+                    else
+                    {
+                        theOrder = null;
+                        Console.WriteLine("Order canceled...");
+                    }
+                    
+                    return;
+                }
+
+                Console.Write("How many would you like to order today?\t");
+
+                string qty = Console.ReadLine();
+
+                
+                //validate quantity ordered... not too many!
+                if(Int32.Parse(qty) >= store.ProdIndex[Int32.Parse(choice)].QuantityOnHand )
+                {
+                    Console.WriteLine("Insufficient quantity on hand.\nTry to order something else!");
+                    Thread.Sleep(1000);
+                    qty = "0";
+                }
+
+
+                //create the order
+                    if (qty != "0")
+                {
+                    ////////////////////////THIS WORKS////////////////////////////////////
+                    // For now, just add to the store's list of receipts....
+                    // Check to see if it works ...
+
+                    Console.WriteLine("Adding item to order...");
+
+                    //add an order
+
+                    //look up the product they want
+                    //
+
+                    IProduct thisProd = store.ProdIndex[Int32.Parse( choice ) ];
+
+                    ///////////////////////
+
+                    //add an item to that order.
+                    //batOrder.AddItemToOrder(new Product("batarangs", "Steel Batarang", 5.0), Int32.Parse(qty) );
+                    theOrder.AddItemToOrder(thisProd, Int32.Parse(qty) );
+
+
+                    //if place here, adds duplicates to the list of reciepts
+                    //add to the store's list of reciepts (list of orders)
+                    //store.Reciepts.Add(theOrder);
+
+                    // TO ACCESS order line-item-tuple IN ORDER LIST DIRECTLY
+                    // short name: string
+                    // store.Reciepts[ store.Reciepts.Count - 1].ItemsOrdered[0].Item1.ProductDesc
+                    // quantity: int
+                    // store.Reciepts[ store.Reciepts.Count - 1].ItemsOrdered[0].Item2
+
+                    //gets the items ordered
+                    Tuple<IProduct, int> lineItem = theOrder.ItemsOrdered[ theOrder.ItemsOrdered.Count - 1 ];
+
+                    Console.WriteLine($"Confirming:  Item: { lineItem.Item1.ProductDesc } Quantity: { lineItem.Item2 } ");
+                    Console.WriteLine("Hit any key to continue");
+                    string pause = Console.ReadLine();
+                    //
+                    ////////////////////////////////////////////////////////////////////////
+
+                }
+
+                Console.Clear();
+                
+                Console.Write("Enter another product or");
+
+            }
+
+            
+
+
+        }
     }
 }

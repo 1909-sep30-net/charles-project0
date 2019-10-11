@@ -8,6 +8,8 @@ namespace business_logic
     {
         //have to put this here as the properties block needs to get through the interface.
         public string ProductDesc { get; }
+        public string SalesBlurb { get; set; }
+
         public double SalePrice { get; }
         public int QuantityOnHand { get; }
 

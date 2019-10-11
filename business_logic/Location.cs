@@ -17,6 +17,31 @@ namespace business_logic
         //product id, quantity
         private List<IProduct> inventory;
 
+        private Dictionary<int, IProduct> prodIndex;
+        public Dictionary<int, IProduct> ProdIndex
+        {
+            get
+            {
+                return this.prodIndex;
+            }
+            set
+            {
+                this.prodIndex = value;
+            }
+        }
+
+        public List<IProduct> Inventory
+        {
+            get
+            {
+                return this.inventory;
+            }
+            set
+            {
+                this.inventory = value;
+            }
+        }
+
         private List<ICustomer> custList;
 
         public List<ICustomer> CustList
@@ -35,6 +60,17 @@ namespace business_logic
 
         //list of reciepts
         private List<IOrder> receipts;
+        public List<IOrder> Reciepts
+        {
+            get
+            {
+                return this.receipts;
+            }
+            set
+            {
+                this.receipts = value;
+            }
+        }
 
         //who runs the place?
 
@@ -75,15 +111,23 @@ namespace business_logic
             this.mgr = new Customer(mgrID.ToString(), mgrID.ToString(), "n/a", "thisIsAnID");
             this.custList.Add(mgr);//not a dummy to hold the first spot.
 
+            //////Add a new order, but make it blank
+            //
+            
             //holds the first spot
             IOrder blankOrder = new Order();
             //add an order
-
+            
             //add a new blank order
             this.receipts.Add( blankOrder );
             
             //add the dummy item to the dummy order 
             this.receipts[0].AddItemToOrder(new Product("nothing", "nada", 0.0) , 0) ;
+
+            //
+            /////////////////////////////////////
+
+            this.prodIndex = new Dictionary<int, IProduct>();
         }
 
         //REMOVE or change...unsecure
@@ -96,7 +140,17 @@ namespace business_logic
         public void AddProduct( IProduct addMe )
         {
             this.inventory.Add( addMe );
+
+            //update index.
+            int ind = this.inventory.Count - 1;
+
+            IProduct someThing = addMe;
+
+
+            this.ProdIndex.Add( ind, someThing);
         }
+
+
 
         //remove an item from inventory
         public void RemProduct( IProduct remMe)
@@ -118,11 +172,6 @@ namespace business_logic
 
             element.AdjustQty(qty);
 
-        }
-
-        public List<IOrder> GetReceipts()
-        {
-            return this.receipts;
         }
 
         //add  a customer to the client list
@@ -176,7 +225,7 @@ namespace business_logic
         //return a string that describes the inventory on hand.
         public string InvToStr()
         {
-            string retThis = "TEST TEST TEST";
+            string retThis = "";
 
             retThis += "Inventory On Hand\n";
 
@@ -185,8 +234,6 @@ namespace business_logic
             {
                 retThis+= ($"Item: {this.inventory[i].ProductDesc } Quantity: { this.inventory[i].QuantityOnHand } \n");
             }
-
-            retThis += "\nTEST TEST TEST";
 
             return retThis;
         }
@@ -199,10 +246,23 @@ namespace business_logic
             retThis += ("Recent Orders\n");
             
             //build the output
+            //iterate through each order on the list of reciepts
             for (int i = 0; i < this.receipts.Count; i++)
             {
-                
-                retThis += ($"Order {i}: Customer: { this.receipts[i].Cust.PhoneNum } Qty Items: {this.receipts[i].ReturnTotalItems() } Sale: { this.receipts[i].GetTotal() } \n");
+
+                retThis += ($"Order { this.Reciepts[i].OrderID }: " 
+                          + $"Customer: { this.Reciepts[i].Cust.PhoneNum }\n");
+                //holds the line item
+                Tuple<IProduct, int> lineItem;
+
+                //iterate through each item on each order on the reciepts
+                for (int q = 0; q < this.Reciepts[i].ItemsOrdered.Count; q++)
+                {
+                    lineItem = this.Reciepts[i].ItemsOrdered[q];
+                    retThis += ($"\tItem: { lineItem.Item1.ProductDesc } Quantity: { lineItem.Item2 } \n");
+                }
+
+                //retThis += ($"Order {i}: Customer: { this.receipts[i].Cust.PhoneNum } Qty Items: {this.receipts[i].ReturnTotalItems() } Sale: { this.receipts[i].GetTotal() } \n");
             }
 
             return retThis;
@@ -223,6 +283,38 @@ namespace business_logic
             }
 
             return retThis;
+        }
+
+        public string BuildMenuChoices()
+        {
+            string retThis = "";
+
+            retThis += "Please enter a number " +
+                "to chose one of the following\n\n";
+
+            //build the output
+            for (int i = 1; i < this.inventory.Count; i++)
+            {
+                
+                retThis += ($"{i} Item: {this.Inventory[i].SalesBlurb } \n");
+                
+            }
+
+
+            return retThis;
+        }
+
+        //create an order and return it.
+        public IOrder CreateOrder(ICustomer customer)
+        {
+            IOrder order = new Order(customer);
+
+            //add it to the lists of those who track it
+            customer.CustOrders.Add(order);
+            this.Reciepts.Add(order);
+            //customer and store now tracking said order.
+
+            return order;
         }
     }
 }

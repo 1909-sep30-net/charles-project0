@@ -61,16 +61,30 @@ namespace business_logic
             }
         }
 
+        private List<IOrder> custOrders;
+        public List<IOrder> CustOrders
+        {
+            get
+            {
+                return this.custOrders;
+            }
+            set
+            {
+                this.custOrders = value;
+            }
+        }
         //simple constructor
         public Customer(string first, string last, string phone, string id)
         {
-            //dynamically generate this.
+            //is the password
             this.custID = id;
 
             //get basic info
             this.fName = first;
             this.lName = last;
             this.phoneNum = phone;
+
+            custOrders = new List<IOrder>();
 
         }
 

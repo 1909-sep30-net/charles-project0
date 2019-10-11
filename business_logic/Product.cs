@@ -23,6 +23,18 @@ namespace business_logic
         }
 
         private string salesBlurb;
+        public string SalesBlurb
+        {
+            get
+            {
+                return this.salesBlurb;
+            }
+            set
+            {
+                this.salesBlurb = value;
+            }
+        }
+
         private double cost;
         public double SalePrice { get; }
         private double saleValue;

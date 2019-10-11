@@ -8,9 +8,9 @@ namespace business_logic
     public class Customer: ICustomer
     {
         //fields
-        private long custID;
+        private string custID;
 
-        public long CustID
+        public string CustID
         {
             get
             {
@@ -62,10 +62,10 @@ namespace business_logic
         }
 
         //simple constructor
-        public Customer(string first, string last, string phone)
+        public Customer(string first, string last, string phone, string id)
         {
             //dynamically generate this.
-            this.custID = 1;
+            this.custID = id;
 
             //get basic info
             this.fName = first;

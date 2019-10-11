@@ -19,6 +19,20 @@ namespace business_logic
 
         private List<ICustomer> custList;
 
+        public List<ICustomer> CustList
+        {
+            get
+            {
+                return this.custList;
+            }
+            private set
+            {
+                //can't set this, initialized in constructor.;
+            }
+            
+        }
+
+
         //list of reciepts
         private List<IOrder> receipts;
 
@@ -58,7 +72,7 @@ namespace business_logic
             this.inventory.Add(blank);
 
             //manager is the first client
-            this.mgr = new Customer(mgrID.ToString(), mgrID.ToString(), "n/a");
+            this.mgr = new Customer(mgrID.ToString(), mgrID.ToString(), "n/a", "thisIsAnID");
             this.custList.Add(mgr);//not a dummy to hold the first spot.
 
             //holds the first spot
@@ -115,12 +129,6 @@ namespace business_logic
         public void AddClient( ICustomer addMe)
         {
             this.custList.Add(addMe);
-
-            //add this ID to the customer
-            //makes for quick getting from the list.
-            //probably better to get the id generated in the SQL database?
-            addMe.CustID = this.custList.Count; 
-
         }
 
         public void RemClient(ICustomer remMe)
@@ -211,7 +219,7 @@ namespace business_logic
             for (int i = 0; i < this.custList.Count; i++)
             {
 
-                retThis += ($"ID: Customer: { this.custList[i].CustID } : Customer: { this.custList[i].LName }, { this.custList[i].FName }  Phone: { this.custList[i].PhoneNum }\n");
+                retThis += ($"ID: Customer: { i } : Customer: { this.custList[i].LName }, { this.custList[i].FName }  Phone: { this.custList[i].PhoneNum }\n");
             }
 
             return retThis;

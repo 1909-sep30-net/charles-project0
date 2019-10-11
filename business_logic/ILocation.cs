@@ -12,6 +12,7 @@ namespace business_logic
         public void AdjustInv(string prod, int qty);
 
         public void AddClient(ICustomer addMe);
+        public List<ICustomer> CustList { get; }
 
         public bool comparePW(string input);
 

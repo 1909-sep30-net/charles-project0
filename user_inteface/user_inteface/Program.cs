@@ -19,7 +19,11 @@ namespace user_inteface
             store.AddProduct(new Product("limbs", "Leg-Day Pre-Built Limbs", 20.00 , 160));
             store.AddProduct(new Product("casing", "Amanda's Attractive Titanium Casing", 30.00, 40));
 
-           
+            store.AddClient(new Customer("Bruce", "Wayne", "5551234567", "12345") );
+            store.AddClient(new Customer("Diana", "Callisto", "1267891057", "0000"));
+            store.AddClient(new Customer("Ed", "Horse", "3571295978", "54321"));
+
+
             //purely UI and temporary
             string manager = "Soupy";
             string product = "Robot";
@@ -44,6 +48,8 @@ namespace user_inteface
                 {
                     case "1":
                         Console.Write("Welcome Returning Customer\n");
+                        //prompt for username and password
+                        ManageCustomer(store);
                         NapTime(1000);
                         break;
                     case "2":
@@ -107,24 +113,117 @@ namespace user_inteface
         //  UI methods for interacting with Business Logic
         //
 
+
+        static void ManageCustomer(ILocation store)
+        {
+            Console.WriteLine("Welcome!\n"
+                + "Please enter \n"
+                + "   your phone number "
+                + "    and password.\n\n");
+
+            Console.WriteLine("Phone Number?  : \t");
+            string phEntered = Console.ReadLine();
+            
+            //look up the customer
+            //Phone number is the primary key!!!!!!!!!!!!!!!!!!! (Works for Wal-Greens and Kroger, works here, too)
+            //declare who we're looking up
+            ICustomer thisCustomer = GetTheCustomer( store, phEntered );
+
+            //password protected account
+            if(thisCustomer != null)
+            {
+                Console.WriteLine("Welcome Back");
+                Console.WriteLine("Enter Your Password");
+                string pwEntered = Console.ReadLine();
+
+                Console.WriteLine($"Welcome Back {thisCustomer.FName}!");
+
+                //Customer menu here?
+
+                //a pause
+                Thread.Sleep(3000);
+            }
+            
+        }
+
+        //retrieve the customer object.  Put in ILocation?
+        static ICustomer GetTheCustomer(ILocation store, string phEntered)
+        {
+            int sentinal = 4;
+            
+            while (sentinal > 0)
+            {
+                try
+                {
+                    Console.WriteLine($"Looking up account under {phEntered}");
+
+                    return store.CustList.Find(entry => entry.PhoneNum == phEntered);
+                }
+                catch (ArgumentNullException ex)
+                {
+                    Console.WriteLine(ex.ToString() );
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+                
+            }
+
+            return null;
+        }
+
         static void MakeNewCustomer(ILocation store)
         {
             Console.Clear();
             //get sample input.
-            Console.Write("First Name: ");
+            Console.Write("First Name: \t");
             string fn = Console.ReadLine();
 
-            Console.Write("Last Name: ");
+            Console.Write("Last Name: \t");
             string ln = Console.ReadLine();
 
-            Console.Write("Cell Phone Number: ");
+            Console.Write("Cell Phone Number: \t");
 
             string cn = Console.ReadLine();
 
-            //####AT THIS POINT, CONSIDER RECORDING A PASSWORD##########
+            // basic cybersecurity: have them answer it twice, compare, then use another method to record the password.
+            // Not encrypted (for now)
+
+            Console.Write("Enter a Password: \t");
+            string pw1 = Console.ReadLine();
+            Console.Write("Confirm your Password: \t");
+            string pw2 = Console.ReadLine();
+            
+            //for old time's sake
+            string RealDeal = new String("");
+
+            while(true)
+            {
+                if(pw1 != pw2)
+                {
+                    Console.WriteLine("Password Entries Do Not Match");
+                    Console.Write("Enter a Password: ");
+                    pw1 = Console.ReadLine();
+                    Console.Write("Confirm your Password: ");
+                    pw2 = Console.ReadLine();
+                }
+                else
+                {
+                    
+                    //build the real password
+                    for(int i = 0; i < pw1.Length ; i++)
+                    {
+                        RealDeal += pw1[i];
+                    }
+                    break;
+                }
+            }
+            
+
 
             //create the customer
-            ICustomer customer = new Customer(fn, ln, cn);
+            ICustomer customer = new Customer(fn, ln, cn, RealDeal);
 
             //confirm that data is correct.
             Console.WriteLine($"Welcome:{ customer.FName } {customer.LName } at {customer.PhoneNum }"
@@ -191,6 +290,8 @@ namespace user_inteface
 
                         //confirmed as Factual so, add to the client-list.
                         store.AddClient(customer);
+
+                        Thread.Sleep(3000);
                         break;
                     default:
                         //any other entry other than relevant choices lead to no-record and exit.
@@ -205,7 +306,34 @@ namespace user_inteface
 
         }
 
+
+        
         ///////end  new customer
+
+        static bool pwValid( ICustomer cust )
+        {
+            //note the number of tries possible
+            int trys = 4;
+            string entry;
+            
+            while( trys > 0 )
+            {
+                //prompt
+                Console.WriteLine( "Enter  your Password: \t" );
+                //get the password 
+                entry = Console.ReadLine();
+                //valid entry?
+                if( entry == ( cust.CustID ) )
+                {
+                    //OK!
+                    return true;
+                }
+                trys--;
+            }
+
+            //nope
+            return false;
+        }
 
         ///////////////////////////////////////// Begin store management UI//////////////
 

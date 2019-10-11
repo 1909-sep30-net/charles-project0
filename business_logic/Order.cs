@@ -45,7 +45,7 @@ namespace business_logic
         public Order() // blank constructor
         {
             this.orderID = 0;//always the first one.
-            this.cust = new Customer("n/a", "n/a", "n/a");//dummy entry
+            this.cust = new Customer("n/a", "n/a", "n/a", "nope");//dummy entry
             this.totalCost = 0.0;
             this.orderDate = 14920101; //yyyymmdd, apparently columbus ordered this via his cell phone on the way from Spain.
             this.orderFulfulled = true;

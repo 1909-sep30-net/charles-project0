@@ -12,7 +12,7 @@ namespace business_logic
         public string FName { get; set; }
         public string LName { get; set; }
 
-        public long CustID { get; set; }
+        public string CustID { get; set; }
 
         string MakeString();
 

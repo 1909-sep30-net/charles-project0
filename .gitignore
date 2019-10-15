@@ -2,6 +2,10 @@
 # Created by https://www.gitignore.io/api/visualstudio,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=visualstudio,visualstudiocode
 
+###For secret configuration String to hide from public
+SecretConfiguration.cs
+
+
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json

@@ -7,6 +7,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\business_logic\business_logic.csproj" />
+    <ProjectReference Include="..\..\data_access\data_access.csproj" />
+    <ProjectReference Include="..\testing\testing.csproj" />
   </ItemGroup>
 
 </Project>

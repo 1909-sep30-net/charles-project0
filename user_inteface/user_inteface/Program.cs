@@ -67,9 +67,16 @@ namespace user_inteface
             //Console.WriteLine("Specific Customer Info");
             //Console.WriteLine($"{george.Fname} {george.Lname} : PH: {george.Phone} :ID {george.CustomerId} : PW{george.CustomerPw}");
 
-            Console.WriteLine("Adding an order to the database");
-                        //db         customer       location
-            addOrderToDB(context, "7892105577", "8168175802");
+            //Console.WriteLine("Adding an order to the database");
+            //db         customer       location
+            //addOrderToDB(context, "7892105577", "8168175802");
+            string tempPhone = "7892105577";
+            //Console.WriteLine("Customer orders from " + tempPhone);
+            //GetCustOrdersFromDB(context, tempPhone);
+            
+            tempPhone = "5551234567";
+            Console.WriteLine($"Orders Placed At This Location with Phone# {tempPhone}");
+            GetLocOrdersFromDB(context, tempPhone);
 
             //confirm continuation
             Console.WriteLine("Press Enter to Continue");
@@ -892,23 +899,96 @@ namespace user_inteface
             context.SaveChanges();
         }
 
-        static void GetCustOrdersFromDB(caproj0Context context, string custPhone, string locPhone)
+        //works
+        static void GetCustOrdersFromDB(caproj0Context context, string custPhone)
         {
-            //linq query to get the orders by phone for customer and location.
+            
+
+            //linq query to get the orders by phone for customer
             var custOrds = from order in context.CustOrder
-                           where (order.Location.Phone == locPhone) && (order.Customer.Phone == custPhone)
+                           where (order.Customer.Phone == custPhone)
                            select order;
 
-            //print it
-            foreach (var ord in custOrds)
-            {
-                string custName = ord.Customer.Fname + " " + ord.Customer.Lname;
-                string locName = ord.Location.StoreName;
+            //convert to list
+            var strOrd = custOrds.ToList();
 
-                Console.WriteLine($"{ord.OrderId,10}{custName,25}{locName,30}{ord.OrderDate,30}");
+            //iterate over the list for easily retrievable and identifying information.
+            for (int i = 0; i < strOrd.Count; i++)
+            {
+                string listToStr = strOrd[i].OrderId.ToString() ;
+                string listToStr2 = strOrd[i].LocationId.ToString();
+                string listToStr3 = strOrd[i].OrderDate.ToString();
+
+                Console.WriteLine("Date:" + listToStr3 + " --  Location: " + listToStr2 + " --  OrderID:" + listToStr);
+
+                //INSERT LINE ITEMS HERE
             }
+            
 
         }
+
+        static void GetLocOrdersFromDB(caproj0Context context, string locPhone)
+        {
+
+            //linq query to get the orders by phone for customer
+            var custOrds = from order in context.CustOrder
+                           where (order.Customer.Phone == locPhone)
+                           select order;
+
+            //convert to list
+            var strOrd = custOrds.ToList();
+
+            //iterate over the list for easily retrievable and identifying information.
+            for (int i = 0; i < strOrd.Count; i++)
+            {
+                string listToStr = strOrd[i].OrderId.ToString();
+                string listToStr2 = strOrd[i].LocationId.ToString();
+                string listToStr3 = strOrd[i].OrderDate.ToString();
+                string listToStr4 = strOrd[i].Customer.Phone;
+
+                Console.WriteLine("Customer: " + listToStr4 +" -- Date:" + listToStr3 + " --  Location: " + listToStr2 + " --  OrderID:" + listToStr);
+
+            }
+
+
+        }
+
+
+        //Create a line item per-order and add to db....
+        static void addLineItemToDB(caproj0Context context, long order, int prodN, int qty )
+        {
+            //check if they exist
+            var theOrder = context.CustOrder.FirstOrDefault(ord => ord.OrderId == order);
+
+            var theProduct = context.Product.FirstOrDefault(prod => prod.ProductId == prodN);
+
+            //check if order and products exist
+            if (theOrder == null)
+            {
+                Console.WriteLine("Invalid order, canceling");
+                return;
+            }
+            else if(theProduct == null)
+            {
+                Console.WriteLine("Invalid item, canceling");
+                return;
+            }
+
+            var lineItem = new data_access.Entities.LineItem //create object
+            {
+                OrderId = order,
+                ProductId = prodN,
+                Quantity = qty 
+            };
+
+            context.LineItem.Add(lineItem);
+
+            context.SaveChanges();
+
+        }
+
+
+
 
         //whoops...
         static string SQLTimeStamp()

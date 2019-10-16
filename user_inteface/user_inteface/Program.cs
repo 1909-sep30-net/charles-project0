@@ -73,20 +73,31 @@ namespace user_inteface
             string tempPhone = "7892105577";
             //Console.WriteLine("Customer orders from " + tempPhone);
             //GetCustOrdersFromDB(context, tempPhone);
-            
-            tempPhone = "5551234567";
-            Console.WriteLine($"Orders Placed At This Location with Phone# {tempPhone}");
-            GetLocOrdersFromDB(context, tempPhone);
+
+            //tempPhone = "5551234567";
+            //Console.WriteLine($"Orders Placed At This Location with Phone# {tempPhone}");
+            //GetLocOrdersFromDB(context, tempPhone);
+
+            //                    order, product, quantity
+            //addLineItemToDB(context, 4, 1, 2);
+            //addLineItemToDB(context, 4, 2, 3);
+            //addLineItemToDB(context, 4, 3, 6);
+
+            long orderN = 4;
+            Console.WriteLine($"Getting all line items for order #{orderN}");
+            GetLineItems(context, orderN);
 
             //confirm continuation
             Console.WriteLine("Press Enter to Continue");
             Console.ReadLine();
 
 
+
             //TEMPORARY
             //set up location
             //after serialization, load the location information coded in.  This is temporary
             ILocation store = new Location("Downtown", 1, 12345, "pickleJar42");
+
             /*
             //sample products
             store.AddProduct(new Product( "circuits", "Sal's fine Circuits", 12.5 , 300 ) );
@@ -926,7 +937,8 @@ namespace user_inteface
             
 
         }
-
+        
+        //works
         static void GetLocOrdersFromDB(caproj0Context context, string locPhone)
         {
 
@@ -987,6 +999,40 @@ namespace user_inteface
 
         }
 
+        static void GetLineItems(caproj0Context context, long ordID)
+        {
+
+
+            //linq query to get the orders by phone for customer
+            var lineItem = from lItem in context.LineItem
+                           where (lItem.OrderId == ordID)
+                           select lItem;
+
+            //convert to list
+            var itemList = lineItem.ToList();
+
+            Console.WriteLine($"{"Name", 20}{"Quantity", 20}{"OrderID", 16}");
+
+            //iterate over the list for easily retrievable and identifying information.
+            for (int i = 0; i < itemList.Count; i++)
+            {
+                //extract the data
+                string listToStr = itemList[i].OrderId.ToString();
+
+                //get the name directly.
+                var theProd = context.Product.FirstOrDefault(p => p.ProductId == itemList[i].ProductId);
+                string listToStr2 = theProd.Pname;
+                
+                //get the quantity
+                string listToStr3 = itemList[i].Quantity.ToString();
+
+                Console.WriteLine($"{listToStr2,20}{listToStr3,20}{listToStr,16}");
+
+                
+            }
+
+
+        }
 
 
 

@@ -89,7 +89,7 @@ namespace user_inteface
             //Console.WriteLine($"Getting all line items for order #{orderN}");
             //GetLineItems(context, orderN);
             */
-            
+
 
 
             //TEMPORARY
@@ -415,7 +415,7 @@ namespace user_inteface
             //create the customer
             //add locally
             ICustomer customer = new business_logic.Customer(fn, ln, cn, RealDeal);
-            
+
 
             //confirm that data is correct.
             Console.WriteLine($"Welcome:{ customer.FName } {customer.LName } at {customer.PhoneNum }"
@@ -665,12 +665,15 @@ namespace user_inteface
 
                         var dbOrdNo = GetCustoOrdNoFromDB(context, cust.PhoneNum, store.Phone, now);
 
-                        for(int i = 0; i < theOrder.ItemsOrdered.Count; i++)
+                        for (int i = 0; i < theOrder.ItemsOrdered.Count; i++)
                         {
                             var product = context.Product.FirstOrDefault(p => p.Pname == theOrder.ItemsOrdered[i].Item1.ProductDesc);
 
                             addLineItemToDB(context, dbOrdNo, product.ProductId, theOrder.ItemsOrdered[i].Item2);
                         }
+
+                        UpdateLocInvOnDB(context, store);
+
                         Console.WriteLine("Press Enter To Continue");
                         string pause = Console.ReadLine();
 
@@ -933,14 +936,14 @@ namespace user_inteface
                 Console.WriteLine("Unable to create order, The customer's record does not exist.");
                 return;
             }
-            else if( location == null)
+            else if (location == null)
             {
                 Console.WriteLine("Unable to create order: The location's record does not exist.");
                 return;
             }
 
             //passes all checks, so proceed
-            
+
             var order = new data_access.Entities.CustOrder //create object
             {
                 CustomerId = customer.CustomerId,
@@ -969,7 +972,7 @@ namespace user_inteface
         //works
         static void GetCustOrdersFromDB(caproj0Context context, string custPhone)
         {
-            
+
 
             //linq query to get the orders by phone for customer
             var custOrds = from order in context.CustOrder
@@ -982,7 +985,7 @@ namespace user_inteface
             //iterate over the list for easily retrievable and identifying information.
             for (int i = 0; i < strOrd.Count; i++)
             {
-                string listToStr = strOrd[i].OrderId.ToString() ;
+                string listToStr = strOrd[i].OrderId.ToString();
                 string listToStr2 = strOrd[i].LocationId.ToString();
                 string listToStr3 = strOrd[i].OrderDate.ToString();
 
@@ -991,10 +994,10 @@ namespace user_inteface
                 //INSERT LINE ITEMS HERE
                 GetLineItems(context, strOrd[i].OrderId);
             }
-            
+
 
         }
-        
+
         //works
         static void GetLocOrdersFromDB(caproj0Context context, string locPhone)
         {
@@ -1015,7 +1018,7 @@ namespace user_inteface
                 string listToStr3 = strOrd[i].OrderDate.ToString();
                 string listToStr4 = strOrd[i].Customer.Phone;
 
-                Console.WriteLine("Customer: " + listToStr4 +" -- Date:" + listToStr3 + " --  Location: " + listToStr2 + " --  OrderID:" + listToStr);
+                Console.WriteLine("Customer: " + listToStr4 + " -- Date:" + listToStr3 + " --  Location: " + listToStr2 + " --  OrderID:" + listToStr);
 
             }
 
@@ -1024,7 +1027,7 @@ namespace user_inteface
 
 
         //Create a line item per-order and add to db....
-        static void addLineItemToDB(caproj0Context context, long order, int prodN, int qty )
+        static void addLineItemToDB(caproj0Context context, long order, int prodN, int qty)
         {
             //check if they exist
             var theOrder = context.CustOrder.FirstOrDefault(ord => ord.OrderId == order);
@@ -1037,7 +1040,7 @@ namespace user_inteface
                 Console.WriteLine("Invalid order, canceling");
                 return;
             }
-            else if(theProduct == null)
+            else if (theProduct == null)
             {
                 Console.WriteLine("Invalid item, canceling");
                 return;
@@ -1047,7 +1050,7 @@ namespace user_inteface
             {
                 OrderId = order,
                 ProductId = prodN,
-                Quantity = qty 
+                Quantity = qty
             };
 
             context.LineItem.Add(lineItem);
@@ -1068,7 +1071,7 @@ namespace user_inteface
             //convert to list
             var itemList = lineItem.ToList();
 
-            Console.WriteLine($"{"Name", 20}{"Quantity", 20}{"OrderID", 16}");
+            Console.WriteLine($"{"Name",20}{"Quantity",20}{"OrderID",16}");
 
             //iterate over the list for easily retrievable and identifying information.
             for (int i = 0; i < itemList.Count; i++)
@@ -1079,13 +1082,13 @@ namespace user_inteface
                 //get the name directly.
                 var theProd = context.Product.FirstOrDefault(p => p.ProductId == itemList[i].ProductId);
                 string listToStr2 = theProd.Pname;
-                
+
                 //get the quantity
                 string listToStr3 = itemList[i].Quantity.ToString();
 
                 Console.WriteLine($"{listToStr2,20}{listToStr3,20}{listToStr,16}");
 
-                
+
             }
 
 
@@ -1098,7 +1101,7 @@ namespace user_inteface
             //check if they exist
             var loc = context.StoreLocation.FirstOrDefault(l => l.LocationId == storeNum);
             int locID = loc.LocationId;
-            var mgr = context.Manager.FirstOrDefault(m => m.ManagerId == loc.Manager );
+            var mgr = context.Manager.FirstOrDefault(m => m.ManagerId == loc.Manager);
 
             if (loc == null)
             {
@@ -1122,10 +1125,10 @@ namespace user_inteface
         {
             var loc = context.StoreLocation.FirstOrDefault(l => l.LocationId == store.LocID);
 
-            //linq query to get the orders by phone for customer
+            //linq query to get the orders by id for location
             var invLine = from inv in context.Inventory
-                           where (inv.LocationId == store.LocID)
-                           select inv;
+                          where (inv.LocationId == store.LocID)
+                          select inv;
 
             //convert to list
             var stInv = invLine.ToList();
@@ -1139,7 +1142,7 @@ namespace user_inteface
 
                 Console.WriteLine($"Adding {stInv[i].Quantity}x{invItem.Pname}");
 
-                store.AddProduct(new business_logic.Product(invItem.Pname, invItem.SalesName, (double)invItem.Cost, stInv[i].Quantity));
+                store.AddProduct(new business_logic.Product(invItem.Pname, invItem.SalesName, (double)invItem.Cost, stInv[i].Quantity, stInv[i].ProductId));
             }
         }
 
@@ -1149,7 +1152,7 @@ namespace user_inteface
             var cust = context.Customer.FirstOrDefault(c => c.Phone == phEntered);
 
             //customer exist?
-            if(cust == null)
+            if (cust == null)
             {
                 Console.WriteLine("Invalid customer:");
                 return null;
@@ -1166,6 +1169,67 @@ namespace user_inteface
 
             //return from the local list
             return GetTheCustomer(store, phEntered);
+        }
+
+        static void UpdateLocInvOnDB(caproj0Context context, ILocation store)
+        {
+            //get the location
+            var loc = context.StoreLocation.FirstOrDefault(l => l.Phone == store.Phone);
+
+            //get the store's inventory representation from the server
+            var invQuery = from inv in context.Inventory
+                          where (inv.LocationId == store.LocID)
+                          select inv;
+
+            //do we need to ?  Why not just write directly? Synchronicity.
+
+            //put it into a list for simplicity's sake
+            var invList = invQuery.ToList();
+
+            int count = 0;
+            //iterate through the query results.
+            foreach(var p in invList)
+            {
+                count++;
+                //Console.WriteLine($"Remote Name: {p.Product.Pname} Qty{p.Quantity} Store: {p.LocationId}:" );
+                //Console.WriteLine($"Local Name: {store.Inventory[count].ProductDesc}" );
+
+                p.Quantity = store.Inventory[count].QuantityOnHand;
+
+                //Console.WriteLine("Check Update:");
+                //Console.WriteLine($"Remote Name: {p.Product.Pname} Qty{p.Quantity} Store: {p.LocationId}:");
+
+
+            }
+
+            context.SaveChanges();
+
+            Console.WriteLine("Update complete, press Enter to Continue");
+            Console.ReadLine(); 
+/*            
+            //for each item in the inventory on the server and on the client
+            for(int i = 0; i < invList.Count; i++)
+            {
+
+                //from the store's inventory entries on the server
+                //get the row we want                                      based on local product id equals server product-id
+                var invRow = invQuery.FirstOrDefault(p => p.Product.ProductId == store.Inventory[i].ProdID);
+
+                //temp
+//                string a = invRow.ProductID.ToString();
+
+  //              Console.WriteLine($"Updated Remote Inventory -- inRow Product ID : {invRow.ProductId} <-> {invRow.Product.Pname} : ||  local equivalant: { store.Inventory[i].ProdID } <-> {store.Inventory[i].ProductDesc}");
+
+                //update that entry on the server
+                invRow.Quantity = store.Inventory[i].QuantityOnHand;
+
+                context.SaveChanges();
+
+            }
+            */
+            
+
+
         }
 
 

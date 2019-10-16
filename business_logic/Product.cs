@@ -6,9 +6,19 @@ namespace business_logic
 {
     public class Product : IProduct
     {
-        private long prodID;
+        private int prodID;
 
-
+        public int ProdID
+        {
+            get
+            {
+                return this.prodID;
+            }
+            set
+            {
+                this.prodID = value;
+            }
+        }
         private string productDesc;
         public string ProductDesc
         {
@@ -55,6 +65,8 @@ namespace business_logic
         public Product(string desc, string sellwords, double cost)
         {
             this.prodID = 0;
+
+
             this.productDesc = desc;
             this.salesBlurb = sellwords;
             this.cost = cost;
@@ -64,9 +76,9 @@ namespace business_logic
         }
 
         //initialize with a quantity.
-        public Product(string desc, string sellwords, double cost, int qty)
+        public Product(string desc, string sellwords, double cost, int qty, int id)
         {
-            this.prodID = 0;
+            this.prodID = id;
             this.productDesc = desc;
             this.salesBlurb = sellwords;
             this.cost = cost;

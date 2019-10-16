@@ -273,9 +273,9 @@ VALUES
 --SELECT * FROM caproj0.Inventory
 
 --get the inventory from a specific store
---SELECT ProductID, Quantity FROM caproj0.StoreLocation
---JOIN 
---caproj0.Inventory ON ( caproj0.StoreLocation.LocationID = caproj0.Inventory.LocationID) AND StoreLocation.Phone = '5551234567';
+SELECT ProductID, Quantity FROM caproj0.StoreLocation
+JOIN 
+caproj0.Inventory ON ( caproj0.StoreLocation.LocationID = caproj0.Inventory.LocationID) AND StoreLocation.Phone = '5551234567';
 
 
 
@@ -355,7 +355,7 @@ SELECT * FROM caproj0.LineItem WHERE OrderID = (SELECT OrderID FROM caproj0.Cust
 
 --Get by specific customer
 SELECT * FROM caproj0.LineItem WHERE OrderID = (SELECT OrderID FROM caproj0.CustOrder WHERE CustOrder.CustomerID = (SELECT CustomerID From caproj0.Customer WHERE Phone = '3331234567'));
-
+--8168175802
 --Join with orders  to show Which Order, Who bought it, where they baught it, when they baught it, What they baught,
 SELECT * FROM caproj0.CustOrder
 JOIN

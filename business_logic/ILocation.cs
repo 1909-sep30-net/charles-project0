@@ -7,6 +7,7 @@ namespace business_logic
     public interface ILocation
     {
         public int LocID { get; set; }
+        public string Phone { get; set; }
         public void AddProduct(IProduct addMe);
         public void PrintInfo();
         public void RemProduct(IProduct removeMe);

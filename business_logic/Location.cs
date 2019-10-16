@@ -25,6 +25,20 @@ namespace business_logic
             }
         }
 
+        private string phone;
+
+        public string Phone
+        {
+            get
+            {
+                return this.phone;
+            }
+            set
+            {
+                this.phone = value;
+            }
+        }
+
         private string locName;
         private int region;
 
@@ -96,13 +110,14 @@ namespace business_logic
         public bool isOnFire = false;
 
         //constructor
-        public Location(string name, int region, long ID, string log, int locID)
+        public Location(string name, int region, long ID, string log, int locID, string phone)
         {
             //basics
             this.locName = name;
             this.region = region;
             this.mgrID = ID;
             this.mgrpwd = log;
+            this.phone = phone;
             
             //The all important location ID.
             this.locID = locID;

@@ -171,7 +171,7 @@ namespace user_inteface
                         //get the manager to make a new customer !
                         //had to use an end-run in order to follow separation of concerns for WHO makes the customer... 
                         //and the ui doesn't
-                        MakeNewCustomer(store);
+                        MakeNewCustomer(context, store);
 
                         break;
                     case "3":
@@ -286,11 +286,15 @@ namespace user_inteface
                                     case "1":
                                         Console.Clear();
                                         //display the order screen.
-                                        orderScreen(store, thisCustomer);
+                                        orderScreen(context, store, thisCustomer);
+                                        //directly from the database
+
                                         break;
                                     case "2":
                                         Console.Clear();
-                                        Console.WriteLine(thisCustomer.RecieptsToStr());
+                                        //Console.WriteLine(thisCustomer.RecieptsToStr());
+                                        //directly from db
+                                        GetCustOrdersFromDB(context, thisCustomer.PhoneNum);
                                         Console.WriteLine("Press Enter to Continue");
                                         string pause = Console.ReadLine();
                                         break;
@@ -359,7 +363,7 @@ namespace user_inteface
             return null;
         }
 
-        static void MakeNewCustomer(ILocation store)
+        static void MakeNewCustomer(caproj0Context context, ILocation store)
         {
             Console.Clear();
             //get sample input.
@@ -409,7 +413,9 @@ namespace user_inteface
 
 
             //create the customer
+            //add locally
             ICustomer customer = new business_logic.Customer(fn, ln, cn, RealDeal);
+            
 
             //confirm that data is correct.
             Console.WriteLine($"Welcome:{ customer.FName } {customer.LName } at {customer.PhoneNum }"
@@ -429,6 +435,10 @@ namespace user_inteface
                 Console.Clear();
                 sentinalConf = true;
                 Console.WriteLine($"Thank You, {customer.FName}, \nPlease log in at the main menu\n\nRecording your information...");
+
+                //mirror to DB
+                //fn, ln, cn, RealDeal
+                AddCustToDB(context, fn, ln, cn, RealDeal);
 
                 //is passed by reference, so all changes from here on out affect the reference.
                 //DATABSE INTEGRATION: before store stores a list of customer.
@@ -478,6 +488,10 @@ namespace user_inteface
 
                         //confirmed as Factual so, add to the client-list.
                         store.AddClient(customer);
+
+                        //mirror to DB from here AFTER corrections
+                        //fn, ln, cn, RealDeal
+                        AddCustToDB(context, fn, ln, cn, RealDeal);
 
                         Thread.Sleep(3000);
                         break;
@@ -579,7 +593,7 @@ namespace user_inteface
         //
 
         //Location will probably need to retain this in business_logic
-        static void orderScreen(ILocation store, ICustomer cust)
+        static void orderScreen(caproj0Context context, ILocation store, ICustomer cust)
         {
             //prompt for an order
             string choice = "";
@@ -644,6 +658,19 @@ namespace user_inteface
 
                         cust.CustOrders.Add(theOrder);//to customer history.
 
+                        DateTime now = DateTime.Now;
+
+                        //write to database
+                        addOrderToDB(context, cust.PhoneNum, store.Phone, now);
+
+                        var dbOrdNo = GetCustoOrdNoFromDB(context, cust.PhoneNum, store.Phone, now);
+
+                        for(int i = 0; i < theOrder.ItemsOrdered.Count; i++)
+                        {
+                            var product = context.Product.FirstOrDefault(p => p.Pname == theOrder.ItemsOrdered[i].Item1.ProductDesc);
+
+                            addLineItemToDB(context, dbOrdNo, product.ProductId, theOrder.ItemsOrdered[i].Item2);
+                        }
                         Console.WriteLine("Press Enter To Continue");
                         string pause = Console.ReadLine();
 
@@ -888,7 +915,7 @@ namespace user_inteface
 
         //works
 
-        static void addOrderToDB(caproj0Context context, string custPhone, string locPhone)
+        static void addOrderToDB(caproj0Context context, string custPhone, string locPhone, DateTime now)
         {
             //datetime format
             //2019-10-14 00:00:00.000
@@ -918,7 +945,7 @@ namespace user_inteface
             {
                 CustomerId = customer.CustomerId,
                 LocationId = location.LocationId,
-                OrderDate = DateTime.Now //don't need to build this, already done.
+                OrderDate = now //don't need to build this, already done.
             };
 
             //add to the table
@@ -926,6 +953,17 @@ namespace user_inteface
 
             //save changes.
             context.SaveChanges();
+        }
+
+        static long GetCustoOrdNoFromDB(caproj0Context context, string ph, string locph, DateTime time)
+        {
+            var custOrds = from order in context.CustOrder
+                           where (order.Customer.Phone == ph) && (order.Location.Phone == locph) && (order.OrderDate == time)
+                           select order;
+
+            var orderList = custOrds.ToList();
+
+            return (long)orderList[0].OrderId;
         }
 
         //works
@@ -1074,7 +1112,7 @@ namespace user_inteface
 
             //initialize the business location object
             // all have region 1 for now.
-            store = new Location(loc.StoreName, 1, mgr.ManagerId, mgr.ManagerPw, loc.LocationId);
+            store = new Location(loc.StoreName, 1, mgr.ManagerId, mgr.ManagerPw, loc.LocationId, loc.Phone);
 
             return store;
         }
@@ -1117,12 +1155,20 @@ namespace user_inteface
                 return null;
             }
 
-            //add to the local list
-            store.AddClient(new business_logic.Customer(cust.Fname, cust.Lname, cust.Phone, cust.CustomerPw));
+            var theCust = GetTheCustomer(store, phEntered);
+
+            //add to the local list if not already in list.
+            if (theCust == null)
+            {
+                store.AddClient(new business_logic.Customer(cust.Fname, cust.Lname, cust.Phone, cust.CustomerPw));
+
+            }
 
             //return from the local list
             return GetTheCustomer(store, phEntered);
         }
+
+
 
         //not needed
         static string SQLTimeStamp()

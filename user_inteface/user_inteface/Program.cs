@@ -7,6 +7,8 @@ using data_access.Entities;
 using data_access;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Product = business_logic.Product;
+using Customer = business_logic.Customer;
 
 namespace user_inteface
 {
@@ -39,14 +41,14 @@ namespace user_inteface
             using var context = new caproj0Context(options);
 
 
-            //test bit
+            //testing testing testing
             /*
             DisplayManagers(context);
             DisplayLocations(context);
-            */
+            
             Console.WriteLine("Customers");
             DisplayCustomers(context);
-            /*
+            
             Console.WriteLine("Products");
             DisplayProducts(context);
             Console.WriteLine("Inventories");
@@ -55,7 +57,7 @@ namespace user_inteface
             DisplayAllOrders(context);
             Console.WriteLine("Line Items");
             DisplayAllLineItems(context);
-            */
+            
             //            Console.WriteLine("Adding test customer...");
             //          AddCustToDB(context, "George", "Washington", "8991234567", "cherryTree");
             //        Console.WriteLine("Updated list of customers");
@@ -70,7 +72,7 @@ namespace user_inteface
             //Console.WriteLine("Adding an order to the database");
             //db         customer       location
             //addOrderToDB(context, "7892105577", "8168175802");
-            string tempPhone = "7892105577";
+            //string tempPhone = "7892105577";
             //Console.WriteLine("Customer orders from " + tempPhone);
             //GetCustOrdersFromDB(context, tempPhone);
 
@@ -83,35 +85,47 @@ namespace user_inteface
             //addLineItemToDB(context, 4, 2, 3);
             //addLineItemToDB(context, 4, 3, 6);
 
-            long orderN = 4;
-            Console.WriteLine($"Getting all line items for order #{orderN}");
-            GetLineItems(context, orderN);
-
-            //confirm continuation
-            Console.WriteLine("Press Enter to Continue");
-            Console.ReadLine();
-
+            //long orderN = 4;
+            //Console.WriteLine($"Getting all line items for order #{orderN}");
+            //GetLineItems(context, orderN);
+            */
+            
 
 
             //TEMPORARY
             //set up location
             //after serialization, load the location information coded in.  This is temporary
-            ILocation store = new Location("Downtown", 1, 12345, "pickleJar42");
+            //ILocation store = new Location("Downtown", 1, 12345, "pickleJar42");
+            //initialize store location
 
+            //initialize the store based on DB info.
+            ILocation store = InitStoreLocation(context, 1);
+
+
+            //confirm continuation
+            Console.WriteLine("Welcome: store n1 by default: Press Enter to Continue");
+            Console.ReadLine();
             /*
-            //sample products
-            store.AddProduct(new Product( "circuits", "Sal's fine Circuits", 12.5 , 300 ) );
-            store.AddProduct(new Product("cpucard", "BluberryCake Computer Board", 3.0 , 40));
-            store.AddProduct(new Product("gears", "Greg's Gears", 0.5 , 3500));
-            store.AddProduct(new Product("sensors", "Sallys's Sense-O-matic", 0.5 , 100));
-            store.AddProduct(new Product("limbs", "Leg-Day Pre-Built Limbs", 20.00 , 160));
-            store.AddProduct(new Product("casing", "Amanda's Attractive Titanium Casing", 30.00, 40));
 
-            //sample customers
-            store.AddClient(new Customer("Bruce", "Wayne", "5551234567", "12345") );
-            store.AddClient(new Customer("Diana", "Callisto", "1267891057", "0000"));
-            store.AddClient(new Customer("Ed", "Horse", "3571295978", "54321"));
+            //sample products
+            store.AddProduct(new business_logic.Product( "circuits", "Sal's fine Circuits", 12.5 , 300 ) );
+            store.AddProduct(new business_logic.Product("cpucard", "BluberryCake Computer Board", 3.0 , 40));
+            store.AddProduct(new business_logic.Product("gears", "Greg's Gears", 0.5 , 3500));
+            store.AddProduct(new business_logic.Product("sensors", "Sallys's Sense-O-matic", 0.5 , 100));
+            store.AddProduct(new business_logic.Product("limbs", "Leg-Day Pre-Built Limbs", 20.00 , 160));
+            store.AddProduct(new business_logic.Product("casing", "Amanda's Attractive Titanium Casing", 30.00, 40));
             */
+
+            //get the stores inventory from the database
+            InitStoreInventory(context, store);
+
+            //sample customers (depreicated)
+            /*
+            store.AddClient(new business_logic.Customer("Bruce", "Wayne", "5551234567", "12345") );
+            store.AddClient(new business_logic.Customer("Diana", "Callisto", "1267891057", "0000"));
+            store.AddClient(new business_logic.Customer("Ed", "Horse", "3571295978", "54321"));
+            */
+
 
 
 
@@ -146,7 +160,7 @@ namespace user_inteface
                     case "1":
                         Console.Write("Welcome Returning Customer\n");
                         //prompt for username and password
-                        ManageCustomer(store);
+                        ManageCustomer(context, store);
                         NapTime(1000);
                         break;
                     case "2":
@@ -211,7 +225,7 @@ namespace user_inteface
         //
 
 
-        static void ManageCustomer(ILocation store)
+        static void ManageCustomer(caproj0Context context, ILocation store)
         {
             Console.WriteLine("Welcome!\n"
                 + "Please enter \n"
@@ -224,7 +238,11 @@ namespace user_inteface
             //look up the customer
             //Phone number is the primary key!!!!!!!!!!!!!!!!!!! (Works for Wal-Greens and Kroger, works here, too)
             //declare who we're looking up
-            ICustomer thisCustomer = GetTheCustomer(store, phEntered);
+
+            //now gets the customer from the database, stores to local list, and analyses from local list.
+            ICustomer thisCustomer = GetCustomerFromDB(context, phEntered, store);
+
+
 
             //password protected account
             if (thisCustomer != null)
@@ -933,6 +951,7 @@ namespace user_inteface
                 Console.WriteLine("Date:" + listToStr3 + " --  Location: " + listToStr2 + " --  OrderID:" + listToStr);
 
                 //INSERT LINE ITEMS HERE
+                GetLineItems(context, strOrd[i].OrderId);
             }
             
 
@@ -1034,9 +1053,78 @@ namespace user_inteface
 
         }
 
+        static ILocation InitStoreLocation(caproj0Context context, int storeNum)
+        {
+            ILocation store;
 
+            //check if they exist
+            var loc = context.StoreLocation.FirstOrDefault(l => l.LocationId == storeNum);
+            int locID = loc.LocationId;
+            var mgr = context.Manager.FirstOrDefault(m => m.ManagerId == loc.Manager );
 
-        //whoops...
+            if (loc == null)
+            {
+                Console.WriteLine("Invalid Store");
+                return null;
+            }
+            else if (mgr == null)
+            {
+                Console.WriteLine("Nobody manages this location, unable to proceed");
+            }
+
+            //initialize the business location object
+            // all have region 1 for now.
+            store = new Location(loc.StoreName, 1, mgr.ManagerId, mgr.ManagerPw, loc.LocationId);
+
+            return store;
+        }
+
+        //initialize store inventory from database-information.
+        static void InitStoreInventory(caproj0Context context, ILocation store)
+        {
+            var loc = context.StoreLocation.FirstOrDefault(l => l.LocationId == store.LocID);
+
+            //linq query to get the orders by phone for customer
+            var invLine = from inv in context.Inventory
+                           where (inv.LocationId == store.LocID)
+                           select inv;
+
+            //convert to list
+            var stInv = invLine.ToList();
+
+            //make the inventory
+            //store.AddProduct(new business_logic.Product("circuits", "Sal's fine Circuits", 12.5, 300));
+
+            for (int i = 0; i < stInv.Count; i++)
+            {
+                var invItem = context.Product.FirstOrDefault(q => q.ProductId == stInv[i].ProductId);
+
+                Console.WriteLine($"Adding {stInv[i].Quantity}x{invItem.Pname}");
+
+                store.AddProduct(new business_logic.Product(invItem.Pname, invItem.SalesName, (double)invItem.Cost, stInv[i].Quantity));
+            }
+        }
+
+        //works
+        static ICustomer GetCustomerFromDB(caproj0Context context, string phEntered, ILocation store)
+        {
+            var cust = context.Customer.FirstOrDefault(c => c.Phone == phEntered);
+
+            //customer exist?
+            if(cust == null)
+            {
+                Console.WriteLine("Invalid customer:");
+                return null;
+            }
+
+            //add to the local list
+            store.AddClient(new business_logic.Customer(cust.Fname, cust.Lname, cust.Phone, cust.CustomerPw));
+
+            //return from the local list
+            return GetTheCustomer(store, phEntered);
+        }
+
+        //not needed
         static string SQLTimeStamp()
         {
             //T-SQL datetime format

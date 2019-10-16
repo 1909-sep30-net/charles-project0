@@ -58,7 +58,7 @@ namespace business_logic
             this.productDesc = desc;
             this.salesBlurb = sellwords;
             this.cost = cost;
-            this.SalePrice = cost * 1.5;
+            this.SalePrice = cost * 2.0;
             this.saleValue = SalePrice - cost;
             this.quantityOnHand = 0;
         }

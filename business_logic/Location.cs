@@ -11,6 +11,20 @@ namespace business_logic
     {
         //unique id
         private int locID;
+
+        public int LocID
+
+        {
+            get
+            {
+                return this.locID;
+            }
+            set
+            {
+                this.locID = value;
+            }
+        }
+
         private string locName;
         private int region;
 
@@ -82,7 +96,7 @@ namespace business_logic
         public bool isOnFire = false;
 
         //constructor
-        public Location(string name, int region, long ID, string log)
+        public Location(string name, int region, long ID, string log, int locID)
         {
             //basics
             this.locName = name;
@@ -90,8 +104,8 @@ namespace business_logic
             this.mgrID = ID;
             this.mgrpwd = log;
             
-            //expandable, but for now, 1
-            this.locID = 1;
+            //The all important location ID.
+            this.locID = locID;
 
             //set up the inventory list
             this.inventory = new List< IProduct >();
